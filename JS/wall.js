@@ -138,11 +138,17 @@ class wall extends physical{
                         this.collide[a][b].position.x=this.position.x+this.width/2+this.collide[a][b].width/2
                         this.collide[a][b].velocity.x=0
                         this.collide[a][b].velocity.y*=(1-physics.friction)
+                        if(a==0&&this.collide[a][b].mode==0){
+                            this.collide[a][b].mode=1
+                        }
                     }
                     else if(boxCollideBox(this,this.collide[a][b])==3){
                         this.collide[a][b].position.x=this.position.x-this.width/2-this.collide[a][b].width/2
                         this.collide[a][b].velocity.x=0
                         this.collide[a][b].velocity.y*=(1-physics.friction)
+                        if(a==0&&this.collide[a][b].mode==1){
+                            this.collide[a][b].mode=0
+                        }
                     }
                 }
             }

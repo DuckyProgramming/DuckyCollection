@@ -140,6 +140,7 @@ function updateMouse(layer){
 }
 function resetWorld(){
 	entities.walls=[]
+	entities.enemies=[]
 	entities.players=[]
 }
 function generateWorld(layer,level){

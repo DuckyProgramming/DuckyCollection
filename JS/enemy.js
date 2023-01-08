@@ -1,15 +1,16 @@
-class player extends partisan{
+class enemy extends partisan{
     constructor(layer,x,y){
         super(layer,x,y,0,30,50)
         this.offset={position:{x:0,y:0}}
         this.anim={direction:0,rate:0}
         this.movement={speed:0.4,jump:12}
+        this.mode=0
     }
     display(){
         if(this.fade>0&&this.size>0){
             this.layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
             this.layer.scale(this.size)
-            this.layer.fill(255,235,0)
+            this.layer.fill(50,150,255)
             this.layer.noStroke()
             this.layer.ellipse(-cos(this.anim.rate*5)-8,22,16,16)
             this.layer.ellipse(cos(this.anim.rate*5)+8,22,16,16)
@@ -25,9 +26,9 @@ class player extends partisan{
             this.layer.ellipse(10+min(0,this.anim.direction)*20,0,20,14)
             this.layer.rotate(sin(this.time*10)*20)
             this.layer.translate(-5-min(0,this.anim.direction)*10,-5)
-            this.layer.fill(255,125,0)
+            this.layer.fill(125,200,255)
             this.layer.ellipse(this.anim.direction*16,-10,20,12)
-            this.layer.stroke(0)
+            this.layer.stroke(0,100,255)
             this.layer.strokeWeight(1)
             this.layer.line(-9+this.anim.direction*16,-10,9+this.anim.direction*16,-10)
             if(this.anim.direction>-0.7){
@@ -55,27 +56,20 @@ class player extends partisan{
             transition.trigger=true
             transition.scene='level'
         }
-        if(inputs.keys[0][0]||inputs.keys[1][0]){
+        if(this.mode==0){
             this.velocity.x-=this.movement.speed
             if(this.anim.direction>-1){
                 this.anim.direction-=0.1
             }
         }
-        if(inputs.keys[0][1]||inputs.keys[1][1]){
+        if(this.mode==1){
             this.velocity.x+=this.movement.speed
             if(this.anim.direction<1){
                 this.anim.direction+=0.1
             }
         }
-        if(!inputs.keys[0][0]&&!inputs.keys[1][0]&&!inputs.keys[0][1]&&!inputs.keys[1][1]){
-            this.anim.direction*=0.95
+        if(floor(random(0,60))==0){
+            this.mode=1-this.mode
         }
-        if((inputs.keys[0][2]||inputs.keys[1][2])&&this.timers[0]>0){
-            this.timers[0]=0
-            this.velocity.y=-this.movement.jump
-            this.timers[1]=1
-        }
-        stage.focus.x=game.edge.x/2
-        stage.focus.y=game.edge.y/2
     }
 }

@@ -1,7 +1,7 @@
 class wall extends physical{
 	constructor(layer,x,y,type,width,height){
 		super(layer,x,y,type,width,height)
-		this.collide=[entities.players]
+		this.collide=[entities.enemies,entities.players]
         switch(this.type){
             case 3:
                 this.position.y+=game.tileSize*0.3
@@ -13,10 +13,6 @@ class wall extends physical{
 		this.layer.translate(this.position.x,this.position.y)
 		this.layer.noStroke()
 		switch(this.type){
-			case 1:
-				this.layer.fill(200,this.fade)
-				this.layer.rect(0,0,this.width,this.height)
-			break
             case 2:
                 this.layer.fill(150,this.fade)
                 for(let a=0,la=this.width/game.tileSize*2+1;a<la;a++){
@@ -113,7 +109,7 @@ class wall extends physical{
 		super.update()
 		for(let a=0,la=this.collide.length;a<la;a++){
             for(let b=0,lb=this.collide[a].length;b<lb;b++){
-                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0){
+                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)){
                     switch(this.type){
                         case 3:
                             this.collide[a][b].dead=true

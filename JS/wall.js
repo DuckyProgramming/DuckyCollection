@@ -39,6 +39,14 @@ class wall extends physical{
                 }
             break
             case 4:
+                this.layer.fill(0,125,0,this.fade)
+                this.layer.noStroke()
+                for(let a=0,la=this.width/game.tileSize;a<la;a++){
+                    this.layer.ellipse(-this.width/2+this.width*a/la+game.tileSize/2-9,-11,30,30)
+                    this.layer.ellipse(-this.width/2+this.width*a/la+game.tileSize/2+9,-9,30,30)
+                    this.layer.ellipse(-this.width/2+this.width*a/la+game.tileSize/2-8,10,30,30)
+                    this.layer.ellipse(-this.width/2+this.width*a/la+game.tileSize/2+11,13,30,30)
+                }
             break
             case 5:
             break
@@ -49,14 +57,14 @@ class wall extends physical{
             case 8:
             break
             case 9:
-                this.layer.fill(150,75,0,this.fade)
-                this.layer.rect(0,0,this.width,this.height)
-                this.layer.fill(0,200,0,this.fade)
-                this.layer.rect(0,-this.height/2+8,this.width,16)
             break
             case 10:
             break
             case 11:
+                this.layer.fill(150,75,0,this.fade)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.fill(0,200,0,this.fade)
+                this.layer.rect(0,-this.height/2+8,this.width,16)
             break
             case 12:
             break
@@ -73,6 +81,10 @@ class wall extends physical{
             case 18:
             break
             case 19:
+            break
+            case 20:
+            break
+            case 21:
                 this.layer.translate(0,sin(this.time*4)*3)
                 this.layer.fill(255,0.4*this.fade)
                 this.layer.noStroke()
@@ -106,10 +118,10 @@ class wall extends physical{
                         case 3:
                             this.collide[a][b].dead=true
                         break
-                        case 19:
+                        case 21:
                             transition.trigger++
                             transition.scene='level'
-                            transition.level=game.level+1
+                            transition.zone=game.zone+1
                         break
                     }
                     if(boxCollideBox(this,this.collide[a][b])==0){
@@ -118,7 +130,11 @@ class wall extends physical{
                     }
                     else if(boxCollideBox(this,this.collide[a][b])==1){
                         this.collide[a][b].position.y=this.position.y-this.height/2-this.collide[a][b].height/2
-                        this.collide[a][b].velocity.y=0
+                        if(this.type==4){
+                            this.collide[a][b].velocity.y*=-0.95
+                        }else{
+                            this.collide[a][b].velocity.y=0
+                        }
                         this.collide[a][b].velocity.x*=(1-physics.friction)
                         this.collide[a][b].timers[0]=5
                     }

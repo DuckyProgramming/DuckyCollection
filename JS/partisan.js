@@ -9,7 +9,7 @@ class partisan extends physical{
 	update(){
 		super.update()
 		this.position.x=constrain(this.position.x,0,game.edge.x)
-		this.position.y=constrain(this.position.y,0,game.edge.y)
+		this.position.y=min(this.position.y,game.edge.y)
 		if(this.dead){
 			this.status=1
 		}

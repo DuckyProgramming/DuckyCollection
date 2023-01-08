@@ -14,9 +14,8 @@ function displayBorder(layer,edge){
 	layer.rect(layer.width+edge.x,edge.y/2,layer.width*2,edge.y+layer.height*2)
 	for(let a=0;a<5;a++){
 		layer.fill(0,0.85-a*0.15)
-		layer.rect(2+a*4,edge.y/2,4,edge.y-a*8)
-		layer.rect(edge.x-2-a*4,edge.y/2,4,edge.y-a*8)
-		layer.rect(edge.x/2,2+a*4,edge.x-8-a*8,4)
+		layer.rect(2+a*4,edge.y/2-a*2,4,edge.y-a*4)
+		layer.rect(edge.x-2-a*4,edge.y/2-a*2,4,edge.y-a*4)
 		layer.rect(edge.x/2,edge.y-2-a*4,edge.x-8-a*8,4)
 	}
 }
@@ -33,7 +32,7 @@ function displayTransition(layer,transition){
 			transition.trigger = false
 			stage.scene=transition.scene
 			if(stage.scene=='level'){
-				game.level=transition.level
+				game.zone=transition.zone
 				resetWorld()
 				generateWorld(graphics.main,levels[game.level][game.zone])
 			}

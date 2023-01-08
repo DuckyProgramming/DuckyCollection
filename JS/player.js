@@ -3,7 +3,7 @@ class player extends partisan{
         super(layer,x,y,0,30,50)
         this.offset={position:{x:0,y:0}}
         this.anim={direction:0,rate:0}
-        this.movement={speed:0.6,jump:12}
+        this.movement={speed:0.4,jump:12}
     }
     display(){
         if(this.fade>0&&this.size>0){

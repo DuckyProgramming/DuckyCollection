@@ -33,6 +33,7 @@ function displayTransition(layer,transition){
 			transition.trigger = false
 			stage.scene=transition.scene
 			if(stage.scene=='level'){
+				game.level=transition.level
 				resetWorld()
 				generateWorld(graphics.main,levels[game.level][game.zone])
 			}

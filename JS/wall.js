@@ -54,6 +54,46 @@ class wall extends physical{
                 this.layer.fill(0,200,0,this.fade)
                 this.layer.rect(0,-this.height/2+8,this.width,16)
             break
+            case 10:
+            break
+            case 11:
+            break
+            case 12:
+            break
+            case 13:
+            break
+            case 14:
+            break
+            case 15:
+            break
+            case 16:
+            break
+            case 17:
+            break
+            case 18:
+            break
+            case 19:
+                this.layer.translate(0,sin(this.time*4)*3)
+                this.layer.fill(255,0.4*this.fade)
+                this.layer.noStroke()
+                this.layer.rotate(this.time*3)
+                for(let a=0;a<10;a++){
+                    this.layer.arc(0,0,this.width+10,this.height+10,a*36-9,a*36+9)
+                    this.layer.arc(0,0,this.width,this.height,a*36-3,a*36+3)
+                }
+                this.layer.rotate(this.time*-3)
+                this.layer.fill(255,125,0,this.fade)
+                this.layer.noStroke()
+                this.layer.ellipse(0,0,25,25)
+                this.layer.stroke(0,255,0,this.fade)
+                this.layer.strokeWeight(5)
+                this.layer.noFill()
+                this.layer.bezier(0,-12,-2,-16,-5,-18,-7,-19)
+                this.layer.bezier(0,-12,2,-14,6,-15,8,-15)
+                this.layer.bezier(0,-12,-1,-13,-3,-10,-4,-6)
+                this.layer.bezier(0,-12,3,-14,5,-8,10,-3)
+                this.layer.translate(0,sin(this.time*4)*-3)
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -65,6 +105,11 @@ class wall extends physical{
                     switch(this.type){
                         case 3:
                             this.collide[a][b].dead=true
+                        break
+                        case 19:
+                            transition.trigger++
+                            transition.scene='level'
+                            transition.level=game.level+1
                         break
                     }
                     if(boxCollideBox(this,this.collide[a][b])==0){

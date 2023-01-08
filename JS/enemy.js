@@ -10,7 +10,7 @@ class enemy extends partisan{
         if(this.fade>0&&this.size>0){
             this.layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
             this.layer.scale(this.size)
-            this.layer.fill(50,150,255)
+            this.layer.fill(50,150,255,this.fade)
             this.layer.noStroke()
             this.layer.ellipse(-cos(this.anim.rate*5)-8,22,16,16)
             this.layer.ellipse(cos(this.anim.rate*5)+8,22,16,16)
@@ -26,9 +26,9 @@ class enemy extends partisan{
             this.layer.ellipse(10+min(0,this.anim.direction)*20,0,20,14)
             this.layer.rotate(sin(this.time*10)*20)
             this.layer.translate(-5-min(0,this.anim.direction)*10,-5)
-            this.layer.fill(125,200,255)
+            this.layer.fill(125,200,255,this.fade)
             this.layer.ellipse(this.anim.direction*16,-10,20,12)
-            this.layer.stroke(0,50,200)
+            this.layer.stroke(0,50,200,this.fade)
             this.layer.strokeWeight(1)
             this.layer.line(-9+this.anim.direction*16,-10,9+this.anim.direction*16,-10)
             if(this.anim.direction>-0.7){
@@ -80,7 +80,11 @@ class enemy extends partisan{
                 if(boxInsideBox(entities.players[a],this)&&!entities.players[a].dead){
                     if(entities.players[a].position.y<this.position.y-this.height/2){
                         this.dead=true
-                        entities.players[a].velocity.y=-entities.players[a].movement.jump
+                        if(inputs.keys[0][2]||inputs.keys[1][2]){
+                            entities.players[a].velocity.y=-entities.players[a].movement.jump
+                        }else{
+                            entities.players[a].velocity.y=-entities.players[a].movement.jump*0.5
+                        }
                     }else{
                         entities.players[a].dead=true
                     }

@@ -9,7 +9,7 @@ class player extends partisan{
         if(this.fade>0&&this.size>0){
             this.layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
             this.layer.scale(this.size)
-            this.layer.fill(255,235,0)
+            this.layer.fill(255,235,0,this.fade)
             this.layer.noStroke()
             this.layer.ellipse(-cos(this.anim.rate*5)-8,22,16,16)
             this.layer.ellipse(cos(this.anim.rate*5)+8,22,16,16)
@@ -25,9 +25,9 @@ class player extends partisan{
             this.layer.ellipse(10+min(0,this.anim.direction)*20,0,20,14)
             this.layer.rotate(sin(this.time*10)*20)
             this.layer.translate(-5-min(0,this.anim.direction)*10,-5)
-            this.layer.fill(255,125,0)
+            this.layer.fill(255,125,0,this.fade)
             this.layer.ellipse(this.anim.direction*16,-10,20,12)
-            this.layer.stroke(0)
+            this.layer.stroke(0,this.fade)
             this.layer.strokeWeight(1)
             this.layer.line(-9+this.anim.direction*16,-10,9+this.anim.direction*16,-10)
             if(this.anim.direction>-0.7){

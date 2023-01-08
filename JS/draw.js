@@ -7,22 +7,7 @@ function draw(){
 		case 'level':
 			switch(stage.background){
 				case 0:
-					/*colorbank
-						sky
-							gradient
-								top 18,74,167
-								bottom 53,177,229
-							cloud 239,250,252
-						tree
-							flower
-								1 125,85,147
-								2 134,117,187
-								3 238,205,227
-							branch 77,42,48
-					*/
-					graphics.main.background(50)
-					//graphics.main.image(graphics.backgrounds[0],(-stage.focus.x/2)%1600,0)
-					//graphics.main.image(graphics.backgrounds[0],(-stage.focus.x/2)%1600+1600,0)
+					graphics.main.background(0,225,225)
 				break
 			}
 			graphics.main.translate(-stage.focus.x,-stage.focus.y)
@@ -39,6 +24,7 @@ function draw(){
 					}
 				}
 			}
+			displayBorder(graphics.main,game.edge)
 		break
 	}
 	graphics.main.pop()

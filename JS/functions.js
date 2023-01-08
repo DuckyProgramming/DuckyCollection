@@ -5,6 +5,21 @@ function setupLayer(layer){
 	layer.colorMode(RGB,255,255,255,1)
 	layer.noStroke()
 }
+function displayBorder(layer,edge){
+	layer.noStroke()
+	layer.fill(0)
+	layer.rect(edge.x/2,-layer.height,layer.width*3+edge.x,layer.height*2)
+	layer.rect(edge.x/2,layer.height+edge.y,layer.width*3+edge.x,layer.height*2)
+	layer.rect(-layer.width,edge.y/2,layer.width*2,edge.y)
+	layer.rect(layer.width+edge.x,edge.y/2,layer.width*2,edge.y)
+	for(let a=0;a<5;a++){
+		layer.fill(0,0.85-a*0.15)
+		layer.rect(4+a*8,edge.y/2,8,edge.y-a*16)
+		layer.rect(edge.x-4-a*8,edge.y/2,8,edge.y-a*16)
+		layer.rect(edge.x/2,4+a*8,edge.x-16-a*16,8)
+		layer.rect(edge.x/2,edge.y-4-a*8,edge.x-16-a*16,8)
+	}
+}
 function displayTransition(layer,transition){
 	layer.noStroke()
 	layer.fill(0)
@@ -32,20 +47,6 @@ function regPoly(layer,x,y,sides,radius,direction){
 		layer.vertex(x+sin(direction+a*360/sides)*radius,y+cos(direction+a*360/sides)*radius)
 	}
 	layer.endShape(CLOSE)
-}
-function sign(value){
-	if(value>=0){return 1}
-	else{return -1}
-}
-function toggle(bool){
-	if(bool){return false}
-	else{return true}
-}
-function mergeColor(color1,color2,value){
-	return [color1[0]*(1-value)+color2[0]*value,color1[1]*(1-value)+color2[1]*value,color1[2]*(1-value)+color2[2]*value]
-}
-function upColor(color,value,key){
-	return [color[0]+value*key[0],color[1]+value*key[1],color[2]+value*key[2]]
 }
 function pointInsideBox(point,box){
 	if(point.position.x>box.position.x-box.width/2&&point.position.x<box.position.x+box.width/2&&point.position.y>box.position.y-box.height/2&&point.position.y<box.position.y+box.height/2){

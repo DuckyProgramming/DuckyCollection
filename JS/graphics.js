@@ -3,7 +3,7 @@ function setupGraphics(){
 	textAlign(CENTER,CENTER)
 	rectMode(CENTER)
 	colorMode(RGB,255,255,255,1)
-	graphics.main=createGraphics(900,600)
+	graphics.main=createGraphics(600,600)
 	setupLayer(graphics.main)
 	graphics.backgrounds=[]
 	for(let a=0;a<10;a++){

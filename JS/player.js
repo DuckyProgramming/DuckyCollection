@@ -3,7 +3,7 @@ class player extends partisan{
         super(layer,x,y,0,30,50)
         this.offset={position:{x:0,y:0}}
         this.anim={direction:0,rate:0}
-        this.movement={speed:0.6,jump:12}
+        this.movement={speed:0.6,jump:10}
     }
     display(){
         if(this.fade>0&&this.size>0){
@@ -44,12 +44,17 @@ class player extends partisan{
                 this.layer.strokeWeight(3-max(0,this.anim.direction-0.75)*15)
                 this.layer.point(4+this.anim.direction*12,-19)
             }
+            this.layer.translate(0,sin(this.time*10)*-2)
             this.layer.scale(1/this.size)
             this.layer.translate(-this.position.x-this.offset.position.x,-this.position.y-this.offset.position.y)
         }
     }
     update(){
         super.update()
+        if(this.dead&&this.fade<=0){
+            transition.trigger=true
+            transition.scene='level'
+        }
         if(inputs.keys[0][0]||inputs.keys[1][0]){
             this.velocity.x-=this.movement.speed
             if(this.anim.direction>-1){
@@ -72,7 +77,7 @@ class player extends partisan{
         }
         this.anim.direction=constrain(this.anim.direction,-1,1)
         this.anim.rate+=this.velocity.x
-        stage.focus.x=this.position.x
-        stage.focus.y=this.position.y
+        stage.focus.x=game.edge.x/2
+        stage.focus.y=game.edge.y/2
     }
 }

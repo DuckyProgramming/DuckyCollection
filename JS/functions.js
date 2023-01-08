@@ -10,14 +10,14 @@ function displayBorder(layer,edge){
 	layer.fill(0)
 	layer.rect(edge.x/2,-layer.height,layer.width*3+edge.x,layer.height*2)
 	layer.rect(edge.x/2,layer.height+edge.y,layer.width*3+edge.x,layer.height*2)
-	layer.rect(-layer.width,edge.y/2,layer.width*2,edge.y)
-	layer.rect(layer.width+edge.x,edge.y/2,layer.width*2,edge.y)
+	layer.rect(-layer.width,edge.y/2,layer.width*2,edge.y+layer.height*2)
+	layer.rect(layer.width+edge.x,edge.y/2,layer.width*2,edge.y+layer.height*2)
 	for(let a=0;a<5;a++){
 		layer.fill(0,0.85-a*0.15)
-		layer.rect(4+a*8,edge.y/2,8,edge.y-a*16)
-		layer.rect(edge.x-4-a*8,edge.y/2,8,edge.y-a*16)
-		layer.rect(edge.x/2,4+a*8,edge.x-16-a*16,8)
-		layer.rect(edge.x/2,edge.y-4-a*8,edge.x-16-a*16,8)
+		layer.rect(2+a*4,edge.y/2,4,edge.y-a*8)
+		layer.rect(edge.x-2-a*4,edge.y/2,4,edge.y-a*8)
+		layer.rect(edge.x/2,2+a*4,edge.x-8-a*8,4)
+		layer.rect(edge.x/2,edge.y-2-a*4,edge.x-8-a*8,4)
 	}
 }
 function displayTransition(layer,transition){
@@ -32,6 +32,10 @@ function displayTransition(layer,transition){
 		if(transition.anim>1.1){
 			transition.trigger = false
 			stage.scene=transition.scene
+			if(stage.scene=='level'){
+				resetWorld()
+				generateWorld(graphics.main,levels[game.level][game.zone])
+			}
 		}
 	}
 	else if(transition.anim>0){
@@ -133,6 +137,10 @@ function updateMouse(layer){
 	inputs.mouse.y=mouseY
 	inputs.rel.x=(inputs.mouse.x-width/2)/stage.scale+layer.width/2
 	inputs.rel.y=(inputs.mouse.y-height/2)/stage.scale+layer.height/2
+}
+function resetWorld(){
+	entities.walls=[]
+	entities.players=[]
 }
 function generateWorld(layer,level){
 	if(level.length>0&&level[0].length>0){

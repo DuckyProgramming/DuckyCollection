@@ -4,9 +4,15 @@ class partisan extends physical{
 		this.trigger={physics:{resistance:true,gravity:true}}
 		this.timers=[0,0]
 		this.size=1
+		this.dead=false
 	}
 	update(){
 		super.update()
+		this.position.x=constrain(this.position.x,0,game.edge.x)
+		this.position.y=constrain(this.position.y,0,game.edge.y)
+		if(this.dead){
+			this.status=1
+		}
 		if(this.trigger.physics.resistance){
 			this.velocity.x*=(1-physics.resistance)
 		}

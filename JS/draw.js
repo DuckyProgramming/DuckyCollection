@@ -5,6 +5,7 @@ function draw(){
 	graphics.main.push()
 	switch(stage.scene){
 		case 'menu':
+			displayMenu(graphics.main)
 		break
 		case 'level':
 			switch(game.level){

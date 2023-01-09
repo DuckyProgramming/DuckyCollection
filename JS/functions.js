@@ -5,6 +5,21 @@ function setupLayer(layer){
 	layer.colorMode(RGB,255,255,255,1)
 	layer.noStroke()
 }
+function displayMenu(layer){
+	layer.background(20,0,20)
+	layer.fill(120)
+	layer.noStroke()
+	layer.rect(layer.width/2,layer.height/2,200,50,10)
+	layer.rect(layer.width/2,layer.height*5/8,200,50,10)
+	layer.rect(layer.width/2,layer.height*3/4,200,50,10)
+	layer.fill(240)
+	layer.textSize(60)
+	layer.text('Duck Platformer\nCollection',layer.width/2,layer.height/4)
+	layer.textSize(20)
+	layer.text('The Duck Farm',layer.width/2,layer.height/2)
+	layer.text('Duckymorph',layer.width/2,layer.height*5/8)
+	layer.text('Ducky'+"'"+'s Caves',layer.width/2,layer.height*3/4)
+}
 function displayBorder(layer,edge){
 	layer.noStroke()
 	layer.fill(0)
@@ -32,6 +47,7 @@ function displayTransition(layer,transition){
 			transition.trigger = false
 			stage.scene=transition.scene
 			if(stage.scene=='level'){
+				game.level=transition.level
 				game.zone=transition.zone
 				resetWorld()
 				generateWorld(graphics.main,levels[game.level][game.zone])

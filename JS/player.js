@@ -50,7 +50,6 @@ class player extends partisan{
         }
     }
     update(){
-        super.update()
         if(this.dead&&this.fade<=0){
             transition.trigger=true
             transition.scene='level'
@@ -77,5 +76,6 @@ class player extends partisan{
         }
         stage.focus.x=game.edge.x/2
         stage.focus.y=game.edge.y/2
+        super.update()
     }
 }

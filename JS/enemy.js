@@ -1,10 +1,15 @@
 class enemy extends partisan{
-    constructor(layer,x,y){
-        super(layer,x,y,0,30,50)
+    constructor(layer,x,y,type){
+        super(layer,x,y,type,30,50)
         this.offset={position:{x:0,y:0}}
         this.anim={direction:0,rate:0}
         this.movement={speed:0.2,jump:8}
         this.mode=0
+        switch(this.type){
+            case 2:
+                this.trigger.physics.gravity=false
+            break
+        }
     }
     display(){
         if(this.fade>0&&this.size>0){
@@ -44,6 +49,12 @@ class enemy extends partisan{
             if(this.anim.direction<0.95){
                 this.layer.strokeWeight(3-max(0,this.anim.direction-0.75)*15)
                 this.layer.point(4+this.anim.direction*12,-19)
+            }
+            if(this.type==2){
+                this.layer.strokeWeight(2)
+                this.layer.line(0,-30,0,-34)
+                this.layer.line(0,-34,sin(this.time*20)*12,-34+cos(this.time*20)*2)
+                this.layer.line(0,-34,sin(this.time*20)*-12,-34+cos(this.time*20)*-2)
             }
             this.layer.translate(0,sin(this.time*10)*-2)
             this.layer.scale(1/this.size)

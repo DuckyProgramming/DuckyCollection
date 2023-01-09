@@ -4,6 +4,7 @@ class wall extends physical{
 		this.collide=[entities.enemies,entities.players]
         switch(this.type){
             case 3:
+                this.position.x-=5
                 this.position.y+=game.tileSize*0.3
                 this.width-=10
                 this.height*=0.4
@@ -22,6 +23,10 @@ class wall extends physical{
             case 10:
                 this.z=1
                 this.width*=0.2
+            break
+            case 26:
+                this.position.y-=game.tileSize*0.375
+                this.height*=0.25
             break
         }
 	}
@@ -99,8 +104,8 @@ class wall extends physical{
             break
             case 8:
             break
-            case 9:
-                this.layer.fill(100+this.z*50,this.fade)
+            case 9: case 26:
+                this.layer.fill(150,this.fade)
                 this.layer.rect(-this.width/2+1.5,0,3,this.height)
                 this.layer.rect(this.width/2-1.5,0,3,this.height)
                 this.layer.rect(0,-this.height/2+1.5,this.width,3)
@@ -118,13 +123,36 @@ class wall extends physical{
                 this.layer.fill(0,200,0,this.fade)
                 this.layer.rect(0,-this.height/2+8,this.width,16)
             break
-            case 12:
-            break
-            case 13:
+            case 12: case 13:
+                this.layer.fill(135)
+                this.layer.rect(0,0,this.width,this.height)
+                if(this.type==13){
+                    this.layer.rotate(-30)
+                    this.layer.fill(255,this.fade)
+                    this.layer.textSize(12)
+                    this.layer.text('Hatch',0,-12)
+                    this.layer.textSize(30)
+                    this.layer.text('A',0,6)
+                    this.layer.rotate(30)
+                }
             break
             case 14:
             break
-            case 15:
+            case 15: case 20:
+                this.layer.fill(255,255,0,this.fade)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.fill(0,this.fade)
+                this.layer.quad(-20,-20,20,20,20,20/3,-20/3,-20)
+                this.layer.quad(-20,-20/3,20/3,20,-20/3,20,-20,20/3)
+                this.layer.triangle(20/3,-20,20,-20/3,20,-20)
+                this.layer.stroke(75,this.fade)
+                this.layer.strokeWeight(2)
+                if(this.type==15){
+                    this.layer.line(0,this.base.position.y-this.position.y-game.tileSize*3,0,this.base.position.y-this.position.y)
+                    this.layer.strokeWeight(6)
+                    this.layer.point(0,this.base.position.y-this.position.y-game.tileSize*3)
+                    this.layer.point(0,this.base.position.y-this.position.y)
+                }
             break
             case 16:
             break
@@ -133,8 +161,6 @@ class wall extends physical{
             case 18:
             break
             case 19:
-            break
-            case 20:
             break
             case 21:
                 this.layer.translate(0,sin(this.time*4)*3)
@@ -187,10 +213,17 @@ class wall extends physical{
                     this.z=round(this.z*30+1)/30
                 }
             break
+            case 15:
+                if(this.time%240<60){
+                    this.position.y-=2
+                }else if(this.time%240>=120&&this.time%240<180){
+                    this.position.y+=2
+                }
+            break
         }
 		for(let a=0,la=this.collide.length;a<la;a++){
             for(let b=0,lb=this.collide[a].length;b<lb;b++){
-                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)&&!(this.type==5&&this.timers[0]>30)&&!((this.type==6||this.type==10)&&this.z<0.5)){
+                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)&&!(this.type==5&&this.timers[0]>30)&&!(this.type==6&&this.z<0.5)&&!(this.type==10&&this.z<0.9)){
                     switch(this.type){
                         case 3: case 10:
                             this.collide[a][b].dead=true
@@ -206,9 +239,11 @@ class wall extends physical{
                             }
                         break
                         case 21:
-                            transition.trigger++
-                            transition.scene='level'
-                            transition.zone=game.zone+1
+                            if(a==1){
+                                transition.trigger++
+                                transition.scene='level'
+                                transition.zone=game.zone+1
+                            }
                         break
                     }
                     if(boxCollideBox(this,this.collide[a][b])==0){

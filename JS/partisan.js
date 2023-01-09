@@ -3,6 +3,7 @@ class partisan extends physical{
 		super(layer,x,y,type,width,height)
 		this.trigger={physics:{resistance:true,gravity:true}}
 		this.timers=[0,0]
+		this.squish=[false,false,false,false]
 		this.size=1
 		this.dead=false
 	}
@@ -21,6 +22,10 @@ class partisan extends physical{
 		if(this.trigger.physics.gravity){
 			this.velocity.y+=physics.gravity
 		}
+		if(this.squish[0]&&this.squish[1]||this.squish[2]&&this.squish[3]){
+			this.dead=true
+		}
+		this.squish=[false,false,false,false]
 		for(let a=0,la=this.timers.length;a<la;a++){
 			if(this.timers[a]>0){
 				this.timers[a]--

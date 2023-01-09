@@ -161,6 +161,9 @@ class wall extends physical{
                     this.layer.strokeWeight(6)
                     this.layer.point(0,this.base.position.y-this.position.y-game.tileSize*3)
                     this.layer.point(0,this.base.position.y-this.position.y)
+                }else{
+                    this.layer.noFill()
+                    this.layer.ellipse(this.base.position.x-this.position.x,this.base.position.y-this.position.y,80,80)
                 }
             break
             case 16: case 17:
@@ -253,6 +256,10 @@ class wall extends physical{
                     this.position.y+=2
                 }
             break
+            case 20:
+                this.position.x=this.base.position.x+sin(this.time*2)*40
+                this.position.y=this.base.position.y+cos(this.time*2)*40
+            break
         }
 		for(let a=0,la=this.collide.length;a<la;a++){
             for(let b=0,lb=this.collide[a].length;b<lb;b++){
@@ -287,6 +294,7 @@ class wall extends physical{
                     }else if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){
                         this.collide[a][b].position.y=this.position.y+this.height/2+this.collide[a][b].height/2
                         this.collide[a][b].velocity.y=0
+                        this.collide[a][b].squish[0]=true
                     }
                     else if(boxCollideBox(this,this.collide[a][b])==1&&this.collide[a][b].velocity.y>0){
                         this.collide[a][b].position.y=this.position.y-this.height/2-this.collide[a][b].height/2
@@ -297,6 +305,7 @@ class wall extends physical{
                         }
                         this.collide[a][b].velocity.x*=(1-physics.friction)
                         this.collide[a][b].timers[0]=5
+                        this.collide[a][b].squish[1]=true
                         if(this.type==8){
                             this.collide[a][b].velocity.x*=1.1
                         }else if(this.type==16){
@@ -311,6 +320,7 @@ class wall extends physical{
                         this.collide[a][b].position.x=this.position.x+this.width/2+this.collide[a][b].width/2
                         this.collide[a][b].velocity.x=0
                         this.collide[a][b].velocity.y*=(1-physics.friction)
+                        this.collide[a][b].squish[2]=true
                         if(a==0&&this.collide[a][b].mode==0){
                             this.collide[a][b].mode=1
                         }
@@ -319,6 +329,7 @@ class wall extends physical{
                         this.collide[a][b].position.x=this.position.x-this.width/2-this.collide[a][b].width/2
                         this.collide[a][b].velocity.x=0
                         this.collide[a][b].velocity.y*=(1-physics.friction)
+                        this.collide[a][b].squish[3]=true
                         if(a==0&&this.collide[a][b].mode==1){
                             this.collide[a][b].mode=0
                         }

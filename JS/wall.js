@@ -267,6 +267,18 @@ class wall extends physical{
                 this.layer.triangle(4,-12,4,12,20,0)
                 this.layer.translate(0,sin(this.time*4)*-3)
             break
+            case 28:
+            break
+            case 29:
+                this.layer.fill(155,85,0,this.fade)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.fill(0,255,0,this.fade)
+                this.layer.rect(0,-this.height/2+5,this.width,10)
+                for(let a=0,la=this.width/game.tileSize;a<la;a++){
+                    this.layer.triangle(-this.width/2+this.width*a/la+game.tileSize/2-20,-10,-this.width/2+this.width*a/la+game.tileSize/2-10,-3,-this.width/2+this.width*a/la+game.tileSize/2,-10)
+                    this.layer.triangle(-this.width/2+this.width*a/la+game.tileSize/2-5,-10,-this.width/2+this.width*a/la+game.tileSize/2+3,-5,-this.width/2+this.width*a/la+game.tileSize/2+20,-10)
+                }
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}

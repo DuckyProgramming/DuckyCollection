@@ -89,8 +89,15 @@ class player extends partisan{
             this.hype--
         }
         this.movement.jump=this.base.movement.jump
-        stage.focus.x=game.edge.x/2
-        stage.focus.y=game.edge.y/2
+        switch(game.level){
+            case 0:
+                stage.focus.x=game.edge.x/2
+                stage.focus.y=game.edge.y/2
+            break
+            case 1: case 2:
+                stage.focus.x=this.position.x
+                stage.focus.y=game.edge.y/2
+        }
         super.update()
     }
 }

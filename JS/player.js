@@ -5,6 +5,7 @@ class player extends partisan{
         this.anim={direction:0,rate:0}
         this.movement={speed:0.4,jump:12}
         this.base.movement={jump:this.movement.jump}
+        this.hype=false
     }
     display(){
         if(this.fade>0&&this.size>0){
@@ -57,12 +58,18 @@ class player extends partisan{
         }
         if(inputs.keys[0][0]||inputs.keys[1][0]){
             this.velocity.x-=this.movement.speed
+            if(this.hype>0){
+                this.velocity.x-=this.movement.speed/2
+            }
             if(this.anim.direction>-1){
                 this.anim.direction-=0.1
             }
         }
         if(inputs.keys[0][1]||inputs.keys[1][1]){
             this.velocity.x+=this.movement.speed
+            if(this.hype>0){
+                this.velocity.x+=this.movement.speed/2
+            }
             if(this.anim.direction<1){
                 this.anim.direction+=0.1
             }
@@ -73,7 +80,13 @@ class player extends partisan{
         if((inputs.keys[0][2]||inputs.keys[1][2])&&this.timers[0]>0){
             this.timers[0]=0
             this.velocity.y=-this.movement.jump
+            if(this.hype>0){
+                this.velocity.y-=this.movement.jump/2
+            }
             this.timers[1]=1
+        }
+        if(this.hype>0){
+            this.hype--
         }
         this.movement.jump=this.base.movement.jump
         stage.focus.x=game.edge.x/2

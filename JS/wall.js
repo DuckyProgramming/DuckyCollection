@@ -221,6 +221,18 @@ class wall extends physical{
                 this.layer.translate(0,sin(this.time*4)*-3)
             break
             case 22:
+                this.layer.fill(255,this.fade*0.6)
+                if(this.width==game.tileSize){
+                    this.layer.rect(0,0,this.width+10,this.height+10)
+                }else{
+                    this.layer.rect(0,0,this.width,this.height+10)
+                }
+                this.layer.fill(225,this.fade)
+                this.layer.stroke(255,this.fade)
+                this.layer.strokeWeight(3)
+                for(let a=0,la=this.width/game.tileSize;a<la;a++){
+                    this.layer.rect(-this.width/2+game.tileSize/2+this.width*a/la,0,game.tileSize-3,this.height-3)
+                }
             break
             case 23:
             break
@@ -282,6 +294,11 @@ class wall extends physical{
                                 transition.trigger++
                                 transition.scene='level'
                                 transition.zone=game.zone+1
+                            }
+                        break
+                        case 22:
+                            if(a==1){
+                                this.collide[a][b].hype=5
                             }
                         break
                     }

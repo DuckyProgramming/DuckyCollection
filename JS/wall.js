@@ -34,6 +34,11 @@ class wall extends physical{
             case 30:
                 this.width*=0.75
             break
+            case 36:
+                this.width+=5
+                this.position.x+=2.5
+                this.height-=10
+            break
         }
 	}
 	display(){
@@ -301,7 +306,7 @@ class wall extends physical{
                     this.layer.triangle(-this.width/2+this.width*a/la+game.tileSize/2-5,-this.height/2+10,-this.width/2+this.width*a/la+game.tileSize/2+3,-this.height/2+15,-this.width/2+this.width*a/la+game.tileSize/2+20,-this.height/2+10)
                 }
             break
-            case 30:
+            case 30: case 36:
                 this.layer.fill(105,45,0,this.fade)
                 this.layer.rect(0,0,this.width,this.height)
             break
@@ -328,6 +333,10 @@ class wall extends physical{
                     this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-8,0,-this.width/2+this.width*a/la+game.tileSize/2-8,15)
                     this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2+8,0,-this.width/2+this.width*a/la+game.tileSize/2+8,15)
                 }
+            break
+            case 33:
+                this.layer.fill(0,0,255,this.fade*0.5)
+                this.layer.rect(0,0,this.width,this.height)
             break
             case 34:
                 this.layer.fill(155,85,0,this.fade)
@@ -408,6 +417,10 @@ class wall extends physical{
                             this.collide[a][b].velocity.x*=0.9
                             this.collide[a][b].velocity.y=constrain(this.collide[a][b].velocity.y,-1.2,0.4)
                             this.collide[a][b].movement.jump=1.2
+                        }else if(this.type==33){
+                            this.collide[a][b].timers[0]=5
+                            this.collide[a][b].velocity.y=constrain(this.collide[a][b].velocity.y,-2.4,0.8)
+                            this.collide[a][b].movement.jump=2.4
                         }else if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){
                             this.collide[a][b].position.y=this.position.y+this.height/2+this.collide[a][b].height/2
                             this.collide[a][b].velocity.y=0

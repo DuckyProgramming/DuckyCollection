@@ -252,6 +252,21 @@ class wall extends physical{
                     this.layer.ellipse(-this.width/2+this.width*a/la+game.tileSize/2-5,11,14,14)
                 }
             break
+            case 27:
+                this.layer.translate(0,sin(this.time*4)*3)
+                this.layer.fill(255,0.4*this.fade)
+                this.layer.noStroke()
+                this.layer.rotate(this.time*3)
+                for(let a=0;a<10;a++){
+                    this.layer.arc(0,0,this.width+10,this.height+10,a*36-9,a*36+9)
+                    this.layer.arc(0,0,this.width,this.height,a*36-3,a*36+3)
+                }
+                this.layer.rotate(this.time*-3)
+                this.layer.fill(255,this.fade)
+                this.layer.rect(-8,0,24,8)
+                this.layer.triangle(4,-12,4,12,20,0)
+                this.layer.translate(0,sin(this.time*4)*-3)
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -286,7 +301,7 @@ class wall extends physical{
         }
 		for(let a=0,la=this.collide.length;a<la;a++){
             for(let b=0,lb=this.collide[a].length;b<lb;b++){
-                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)&&!(this.type==5&&this.timers[0]>30)&&!(this.type==6&&this.z<0.5)&&!((this.type==10||this.type==24)&&this.z<0.9)){
+                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)&&!(this.type==5&&this.timers[0]>30)&&!(this.type==6&&this.z<0.5)&&!((this.type==10||this.type==24)&&this.z<0.9)&&!this.collide[a][b].dead){
                     switch(this.type){
                         case 3: case 10: case 23: case 24:
                             this.collide[a][b].dead=true
@@ -313,53 +328,62 @@ class wall extends physical{
                                 this.collide[a][b].hype=5
                             }
                         break
+                        case 27:
+                            if(a==1){
+                                transition.trigger++
+                                transition.scene='menu'
+                                transition.zone=0
+                            }
+                        break
                     }
-                    if(this.type==18){
-                        this.collide[a][b].timers[0]=5
-                        this.collide[a][b].velocity.x*=0.9
-                        this.collide[a][b].velocity.y=constrain(this.collide[a][b].velocity.y,-1.2,0.4)
-                        this.collide[a][b].movement.jump=1.2
-                    }else if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){
-                        this.collide[a][b].position.y=this.position.y+this.height/2+this.collide[a][b].height/2
-                        this.collide[a][b].velocity.y=0
-                        this.collide[a][b].squish[0]=true
-                    }
-                    else if(boxCollideBox(this,this.collide[a][b])==1&&this.collide[a][b].velocity.y>0){
-                        this.collide[a][b].position.y=this.position.y-this.height/2-this.collide[a][b].height/2
-                        if(this.type==4){
-                            this.collide[a][b].velocity.y*=-0.95
-                        }else{
+                    if(!this.collide[a][b].dead){
+                        if(this.type==18){
+                            this.collide[a][b].timers[0]=5
+                            this.collide[a][b].velocity.x*=0.9
+                            this.collide[a][b].velocity.y=constrain(this.collide[a][b].velocity.y,-1.2,0.4)
+                            this.collide[a][b].movement.jump=1.2
+                        }else if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){
+                            this.collide[a][b].position.y=this.position.y+this.height/2+this.collide[a][b].height/2
                             this.collide[a][b].velocity.y=0
+                            this.collide[a][b].squish[0]=true
                         }
-                        this.collide[a][b].velocity.x*=(1-physics.friction)
-                        this.collide[a][b].timers[0]=5
-                        this.collide[a][b].squish[1]=true
-                        if(this.type==8){
-                            this.collide[a][b].velocity.x*=1.1
-                        }else if(this.type==16){
-                            this.collide[a][b].position.x+=2
-                        }else if(this.type==17){
-                            this.collide[a][b].position.x-=2
-                        }else if(this.type==19){
-                            this.collide[a][b].velocity.x*=1.2
+                        else if(boxCollideBox(this,this.collide[a][b])==1&&this.collide[a][b].velocity.y>0){
+                            this.collide[a][b].position.y=this.position.y-this.height/2-this.collide[a][b].height/2
+                            if(this.type==4){
+                                this.collide[a][b].velocity.y*=-0.95
+                            }else{
+                                this.collide[a][b].velocity.y=0
+                            }
+                            this.collide[a][b].velocity.x*=(1-physics.friction)
+                            this.collide[a][b].timers[0]=5
+                            this.collide[a][b].squish[1]=true
+                            if(this.type==8){
+                                this.collide[a][b].velocity.x*=1.1
+                            }else if(this.type==16){
+                                this.collide[a][b].position.x+=2
+                            }else if(this.type==17){
+                                this.collide[a][b].position.x-=2
+                            }else if(this.type==19){
+                                this.collide[a][b].velocity.x*=1.2
+                            }
                         }
-                    }
-                    else if(boxCollideBox(this,this.collide[a][b])==2&&this.collide[a][b].velocity.x<0){
-                        this.collide[a][b].position.x=this.position.x+this.width/2+this.collide[a][b].width/2
-                        this.collide[a][b].velocity.x=0
-                        this.collide[a][b].velocity.y*=(1-physics.friction)
-                        this.collide[a][b].squish[2]=true
-                        if(a==0&&this.collide[a][b].mode==0){
-                            this.collide[a][b].mode=1
+                        else if(boxCollideBox(this,this.collide[a][b])==2&&this.collide[a][b].velocity.x<0){
+                            this.collide[a][b].position.x=this.position.x+this.width/2+this.collide[a][b].width/2
+                            this.collide[a][b].velocity.x=0
+                            this.collide[a][b].velocity.y*=(1-physics.friction)
+                            this.collide[a][b].squish[2]=true
+                            if(a==0&&this.collide[a][b].mode==0){
+                                this.collide[a][b].mode=1
+                            }
                         }
-                    }
-                    else if(boxCollideBox(this,this.collide[a][b])==3&&this.collide[a][b].velocity.x>0){
-                        this.collide[a][b].position.x=this.position.x-this.width/2-this.collide[a][b].width/2
-                        this.collide[a][b].velocity.x=0
-                        this.collide[a][b].velocity.y*=(1-physics.friction)
-                        this.collide[a][b].squish[3]=true
-                        if(a==0&&this.collide[a][b].mode==1){
-                            this.collide[a][b].mode=0
+                        else if(boxCollideBox(this,this.collide[a][b])==3&&this.collide[a][b].velocity.x>0){
+                            this.collide[a][b].position.x=this.position.x-this.width/2-this.collide[a][b].width/2
+                            this.collide[a][b].velocity.x=0
+                            this.collide[a][b].velocity.y*=(1-physics.friction)
+                            this.collide[a][b].squish[3]=true
+                            if(a==0&&this.collide[a][b].mode==1){
+                                this.collide[a][b].mode=0
+                            }
                         }
                     }
                 }

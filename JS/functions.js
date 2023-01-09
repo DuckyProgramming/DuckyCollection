@@ -161,5 +161,15 @@ function generateWorld(layer,level){
 			}
 		}
 	}
-	run={fore:[entities.walls,entities.enemies,entities.players]}
+	switch(game.level){
+		case 0:
+			run={back:[],fore:[entities.walls,entities.enemies,entities.players]}
+		break
+		case 1:
+			for(let a=0;a<10;a++){
+				entities.clouds.push(new cloud(layer))
+			}
+			run={back:[entities.clouds],fore:[entities.walls,entities.enemies,entities.players]}
+		break
+	}
 }

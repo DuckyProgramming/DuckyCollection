@@ -4,11 +4,22 @@ function draw(){
 	graphics.main.clear()
 	graphics.main.push()
 	switch(stage.scene){
+		case 'menu':
+		break
 		case 'level':
-			switch(stage.background){
+			switch(game.level){
 				case 0:
 					graphics.main.background(0,225,225)
 				break
+				case 1:
+					graphics.main.background(0,150,255)
+				break
+			}
+			for(let a=0,la=run.back.length;a<la;a++){
+				for(let b=0,lb=run.back[a].length;b<lb;b++){
+					run.back[a][b].display()
+					run.back[a][b].update()
+				}
 			}
 			graphics.main.translate(-stage.focus.x,-stage.focus.y)
 			graphics.main.scale(stage.focus.size*stage.quality)

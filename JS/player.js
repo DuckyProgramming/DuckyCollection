@@ -4,6 +4,7 @@ class player extends partisan{
         this.offset={position:{x:0,y:0}}
         this.anim={direction:0,rate:0}
         this.movement={speed:0.4,jump:12}
+        this.base.movement={jump:this.movement.jump}
     }
     display(){
         if(this.fade>0&&this.size>0){
@@ -74,6 +75,7 @@ class player extends partisan{
             this.velocity.y=-this.movement.jump
             this.timers[1]=1
         }
+        this.movement.jump=this.base.movement.jump
         stage.focus.x=game.edge.x/2
         stage.focus.y=game.edge.y/2
         super.update()

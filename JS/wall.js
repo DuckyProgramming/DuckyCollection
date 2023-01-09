@@ -177,6 +177,12 @@ class wall extends physical{
                 }
             break
             case 18:
+                this.layer.fill(0,this.fade*0.2)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.fill(0,this.fade*0.1)
+                for(let a=0;a<5;a++){
+                    this.layer.rect(0,0,this.width-8-a*8,this.height-8-a*8)
+                }
             break
             case 19:
             break
@@ -264,7 +270,12 @@ class wall extends physical{
                             }
                         break
                     }
-                    if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){
+                    if(this.type==18){
+                        this.collide[a][b].timers[0]=5
+                        this.collide[a][b].velocity.x*=0.9
+                        this.collide[a][b].velocity.y=constrain(this.collide[a][b].velocity.y,-1.2,0.4)
+                        this.collide[a][b].movement.jump=1.2
+                    }else if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){
                         this.collide[a][b].position.y=this.position.y+this.height/2+this.collide[a][b].height/2
                         this.collide[a][b].velocity.y=0
                     }

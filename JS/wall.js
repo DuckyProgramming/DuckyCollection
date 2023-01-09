@@ -121,9 +121,9 @@ class wall extends physical{
                 this.layer.rect(0,this.height/2-1.5,this.width,3)
             break
             case 10:
-                this.layer.fill(150+this.z*105,0,0,this.fade)
+                this.layer.fill(125+this.z*130,0,0,this.fade)
                 this.layer.rect(0,0,this.width+this.z*2,this.height)
-                this.layer.fill(200+this.z*55,this.z*50,this.z*50,this.fade)
+                this.layer.fill(150+this.z*105,this.z*50,this.z*50,this.fade)
                 this.layer.rect(0,0,this.width/3+this.z*2,this.height)
             break
             case 11:

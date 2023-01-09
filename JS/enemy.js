@@ -6,7 +6,7 @@ class enemy extends partisan{
         this.movement={speed:0.1,jump:6}
         this.mode=0
         switch(this.type){
-            case 2:
+            case 2: case 4:
                 this.trigger.physics.gravity=false
             break
         }
@@ -50,12 +50,12 @@ class enemy extends partisan{
                 this.layer.strokeWeight(3-max(0,this.anim.direction-0.75)*15)
                 this.layer.point(4+this.anim.direction*12,-19)
             }
-            if(this.type==2){
+            if(this.type==2||this.type==4){
                 this.layer.strokeWeight(2)
                 this.layer.line(0,-30,0,-34)
                 this.layer.line(0,-34,sin(this.time*20)*12,-34+cos(this.time*20)*2)
                 this.layer.line(0,-34,sin(this.time*20)*-12,-34+cos(this.time*20)*-2)
-            }else if(this.type==3){
+            }else if(this.type==3||this.type==4){
                 this.layer.strokeWeight(2)
                 this.layer.line(0,-30,0,-34)
                 this.layer.stroke(255,0,0,this.fade)
@@ -96,7 +96,7 @@ class enemy extends partisan{
             for(let a=0,la=entities.players.length;a<la;a++){
                 if(boxInsideBox(entities.players[a],this)&&!entities.players[a].dead){
                     if(entities.players[a].position.y<this.position.y-this.height/2){
-                        if(this.type!=3){
+                        if(this.type!=3&&this.type!=4){
                             this.dead=true
                         }
                         if(inputs.keys[0][2]||inputs.keys[1][2]){

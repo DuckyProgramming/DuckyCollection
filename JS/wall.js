@@ -185,6 +185,15 @@ class wall extends physical{
                 }
             break
             case 19:
+                this.layer.fill(0,75,150,this.fade*0.6)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.stroke(0,this.fade)
+                this.layer.strokeWeight(2)
+                for(let a=0,la=this.width/game.tileSize;a<la;a++){
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-10,-10,-this.width/2+this.width*a/la+game.tileSize/2+10,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-10,5,-this.width/2+this.width*a/la+game.tileSize/2-5,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2+10,-5,-this.width/2+this.width*a/la+game.tileSize/2+5,-10)
+                }
             break
             case 21:
                 this.layer.translate(0,sin(this.time*4)*3)
@@ -294,6 +303,8 @@ class wall extends physical{
                             this.collide[a][b].position.x+=2
                         }else if(this.type==17){
                             this.collide[a][b].position.x-=2
+                        }else if(this.type==19){
+                            this.collide[a][b].velocity.x*=1.2
                         }
                     }
                     else if(boxCollideBox(this,this.collide[a][b])==2&&this.collide[a][b].velocity.x<0){

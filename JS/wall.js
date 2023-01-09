@@ -232,7 +232,6 @@ class wall extends physical{
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
 	update(){
-		super.update()
         switch(this.type){
             case 5:
                 if(this.timers[0]>0){
@@ -337,5 +336,6 @@ class wall extends physical{
                 }
             }
         }
+        super.update()
 	}
 }

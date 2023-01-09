@@ -50,14 +50,22 @@ class enemy extends partisan{
                 this.layer.strokeWeight(3-max(0,this.anim.direction-0.75)*15)
                 this.layer.point(4+this.anim.direction*12,-19)
             }
-            if(this.type==2||this.type==4){
+            if(this.type==2){
                 this.layer.strokeWeight(2)
                 this.layer.line(0,-30,0,-34)
                 this.layer.line(0,-34,sin(this.time*20)*12,-34+cos(this.time*20)*2)
                 this.layer.line(0,-34,sin(this.time*20)*-12,-34+cos(this.time*20)*-2)
-            }else if(this.type==3||this.type==4){
+            }else if(this.type==3){
                 this.layer.strokeWeight(2)
                 this.layer.line(0,-30,0,-34)
+                this.layer.stroke(255,0,0,this.fade)
+                this.layer.strokeWeight(4)
+                this.layer.point(0,-34)
+            }else if(this.type==4){
+                this.layer.strokeWeight(2)
+                this.layer.line(0,-30,0,-34)
+                this.layer.line(0,-34,sin(this.time*20)*12,-34+cos(this.time*20)*2)
+                this.layer.line(0,-34,sin(this.time*20)*-12,-34+cos(this.time*20)*-2)
                 this.layer.stroke(255,0,0,this.fade)
                 this.layer.strokeWeight(4)
                 this.layer.point(0,-34)

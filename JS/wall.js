@@ -17,7 +17,7 @@ class wall extends physical{
             break
             case 9:
                 this.position.y-=game.tileSize*0.375
-                this.width*=1.5
+                this.width+=20
                 this.height*=0.25
             break
             case 10:
@@ -163,9 +163,18 @@ class wall extends physical{
                     this.layer.point(0,this.base.position.y-this.position.y)
                 }
             break
-            case 16:
-            break
-            case 17:
+            case 16: case 17:
+                this.layer.fill(95,this.fade)
+                this.layer.stroke(60,this.fade)
+                this.layer.strokeWeight(2)
+                this.layer.rect(0,0,this.width-2,this.height-2)
+                for(let a=0,la=this.width/10;a<la;a++){
+                    if(this.type==16){
+                        this.layer.line(-this.width/2+a*10+this.time%10,-this.height/2+1,-this.width/2+a*10+this.time%10,this.height/2-1)
+                    }else {
+                        this.layer.line(-this.width/2+a*10+10-this.time%10,-this.height/2+1,-this.width/2+a*10+10-this.time%10,this.height/2-1)
+                    }
+                }
             break
             case 18:
             break
@@ -270,6 +279,10 @@ class wall extends physical{
                         this.collide[a][b].timers[0]=5
                         if(this.type==8){
                             this.collide[a][b].velocity.x*=1.1
+                        }else if(this.type==16){
+                            this.collide[a][b].position.x+=2
+                        }else if(this.type==17){
+                            this.collide[a][b].position.x-=2
                         }
                     }
                     else if(boxCollideBox(this,this.collide[a][b])==2&&this.collide[a][b].velocity.x<0){

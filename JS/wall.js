@@ -12,7 +12,7 @@ class wall extends physical{
             case 5:
                 this.timers=[0]
             break
-            case 6:
+            case 6: case 24:
                 this.z=1
             break
             case 9:
@@ -235,10 +235,22 @@ class wall extends physical{
                 }
             break
             case 23:
+                this.layer.fill(150,0,0,this.fade*0.6)
+                this.layer.rect(0,0,this.width,this.height)
             break
             case 24:
+                this.layer.fill(150,0,0,this.fade*(0.2+this.z*0.4))
+                this.layer.rect(0,0,this.width*this.z,this.height)
             break
             case 25:
+                this.layer.fill(35,this.fade)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.fill(70,this.fade)
+                for(let a=0,la=this.width/game.tileSize;a<la;a++){
+                    this.layer.ellipse(-this.width/2+this.width*a/la+game.tileSize/2-10,-6,10,10)
+                    this.layer.ellipse(-this.width/2+this.width*a/la+game.tileSize/2+8,-2,16,16)
+                    this.layer.ellipse(-this.width/2+this.width*a/la+game.tileSize/2-5,11,14,14)
+                }
             break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
@@ -253,7 +265,7 @@ class wall extends physical{
                     }
                 }
             break
-            case 6: case 10:
+            case 6: case 10: case 24:
                 if(this.time%180<30){
                     this.z=round(this.z*30-1)/30
                 }else if(this.time%180>=90&&this.time%180<120){
@@ -274,9 +286,9 @@ class wall extends physical{
         }
 		for(let a=0,la=this.collide.length;a<la;a++){
             for(let b=0,lb=this.collide[a].length;b<lb;b++){
-                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)&&!(this.type==5&&this.timers[0]>30)&&!(this.type==6&&this.z<0.5)&&!(this.type==10&&this.z<0.9)){
+                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)&&!(this.type==5&&this.timers[0]>30)&&!(this.type==6&&this.z<0.5)&&!((this.type==10||this.type==24)&&this.z<0.9)){
                     switch(this.type){
-                        case 3: case 10:
+                        case 3: case 10: case 23: case 24:
                             this.collide[a][b].dead=true
                         break
                         case 5:

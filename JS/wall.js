@@ -3,7 +3,7 @@ class wall extends physical{
 		super(layer,x,y,type,width,height)
 		this.collide=[entities.enemies,entities.players]
         switch(this.type){
-            case 3: case 32:
+            case 3: case 32: case 41:
                 this.position.x-=5
                 this.position.y+=game.tileSize*0.3
                 this.width-=10
@@ -326,16 +326,22 @@ class wall extends physical{
                     }
                 }
             break
-            case 32:
-                for(let a=0,la=this.width/game.tileSize;a<la;a++){
-                    this.layer.stroke(105)
+            case 32: case 41:
+                if(this.type==32){
+                    this.layer.stroke(105,this.fade)
                     this.layer.strokeWeight(6)
                     this.layer.noFill()
-                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2,-15,-this.width/2+this.width*a/la+game.tileSize/2,15)
-                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2,5,-this.width/2+this.width*a/la+game.tileSize/2-10,15)
-                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2,5,-this.width/2+this.width*a/la+game.tileSize/2+10,15)
-                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-8,0,-this.width/2+this.width*a/la+game.tileSize/2-8,15)
-                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2+8,0,-this.width/2+this.width*a/la+game.tileSize/2+8,15)
+                }else if(this.type==41){
+                    this.layer.stroke(200,255,255,this.fade)
+                    this.layer.strokeWeight(6)
+                    this.layer.noFill()
+                }
+                for(let a=0,la=this.width/game.tileSize;a<la;a++){
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2,-15,-this.width/2+this.width*a/la+game.tileSize/2,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2,5,-this.width/2+this.width*a/la+game.tileSize/2-10,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2,5,-this.width/2+this.width*a/la+game.tileSize/2+10,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-8,0,-this.width/2+this.width*a/la+game.tileSize/2-8,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2+8,0,-this.width/2+this.width*a/la+game.tileSize/2+8,10)
                 }
             break
             case 33:
@@ -384,6 +390,14 @@ class wall extends physical{
             case 39:
                 this.layer.fill(255,0,255,this.fade*0.5)
                 this.layer.rect(0,0,this.width,this.height)
+            break
+            case 40:
+                this.layer.fill(0,this.fade*0.4)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.fill(255,this.fade*0.1)
+                for(let a=0;a<5;a++){
+                    this.layer.rect(0,0,this.width-8-a*8,this.height-8-a*8)
+                }
             break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
@@ -457,6 +471,17 @@ class wall extends physical{
                             if(a==1&&this.collide[a][b].type!=1){
                                 this.collide[a][b].type=1
                                 entities.particles.push(new particle(this.layer,this.collide[a][b].position.x,this.collide[a][b].position.y,0,[200,255,255]))
+                            }
+                        break
+                        case 40:
+                            if(a==1&&this.collide[a][b].type!=0){
+                                this.collide[a][b].type=0
+                                entities.particles.push(new particle(this.layer,this.collide[a][b].position.x,this.collide[a][b].position.y,0,[0,0,0]))
+                            }
+                        break
+                        case 41:
+                            if(this.collide[a][b].type!=1){
+                                this.collide[a][b].dead=true
                             }
                         break
                     }

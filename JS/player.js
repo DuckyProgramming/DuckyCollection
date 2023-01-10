@@ -55,6 +55,7 @@ class player extends partisan{
         if(this.dead&&this.fade<=0){
             transition.trigger=true
             transition.scene='level'
+            transition.dead=true
         }
         if(inputs.keys[0][0]||inputs.keys[1][0]){
             this.velocity.x-=this.movement.speed

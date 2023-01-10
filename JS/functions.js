@@ -172,7 +172,13 @@ function generateWorld(layer,level){
 				}else if(level[a][b]<-1){
 					entities.enemies.push(new enemy(layer,b*game.tileSize+game.tileSize/2,a*game.tileSize+game.tileSize/2,-level[a][b]-1))
 				}else if(level[a][b]==-1){
-					entities.players.push(new player(layer,b*game.tileSize+game.tileSize/2,a*game.tileSize+game.tileSize/2))
+					if(transition.dead){
+						entities.players.push(new player(layer,game.check.x,game.check.y))
+					}else{
+						entities.players.push(new player(layer,b*game.tileSize+game.tileSize/2,a*game.tileSize+game.tileSize/2))
+						game.check.x=b*game.tileSize+game.tileSize/2
+						game.check.y=a*game.tileSize+game.tileSize/2
+					}
 				}
 			}
 		}

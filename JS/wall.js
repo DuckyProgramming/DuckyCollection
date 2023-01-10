@@ -27,6 +27,7 @@ class wall extends physical{
             case 23:
                 this.width-=4
                 this.height-=4
+            break
             case 26:
                 this.position.y-=game.tileSize*0.375
                 this.height*=0.25
@@ -38,6 +39,9 @@ class wall extends physical{
                 this.width+=5
                 this.position.x+=2.5
                 this.height-=10
+            break
+            case 37:
+                this.hit=false
             break
         }
 	}
@@ -342,6 +346,30 @@ class wall extends physical{
                 this.layer.fill(155,85,0,this.fade)
                 this.layer.rect(0,0,this.width,this.height)
             break
+            case 35:
+                this.layer.fill(155,85,0,this.fade)
+                this.layer.stroke(105,55,0,this.fade)
+                this.layer.strokeWeight(3)
+                this.layer.rect(0,15,10,10)
+                if(!this.hit){
+                    this.layer.rect(0,0,30,20)
+                    this.layer.fill(255,this.fade)
+                    this.layer.noStroke()
+                    this.layer.textSize(8)
+                    this.layer.text('No\nDucks',0,0)
+                }
+            break
+            case 37:
+                this.layer.fill(155,85,0,this.fade)
+                this.layer.stroke(105,55,0,this.fade)
+                this.layer.strokeWeight(3)
+                this.layer.rect(0,15,10,10)
+                this.layer.rect(0,0,30,20)
+                this.layer.fill(255,this.fade)
+                this.layer.noStroke()
+                this.layer.textSize(8)
+                this.layer.text('Exit',0,0)
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -391,11 +419,12 @@ class wall extends physical{
                                 this.collide[a][b].dead=true
                             }
                         break
-                        case 21:
+                        case 21: case 37:
                             if(a==1){
                                 transition.trigger++
                                 transition.scene='level'
                                 transition.zone=game.zone+1
+                                transition.dead=false
                             }
                         break
                         case 22:
@@ -407,7 +436,6 @@ class wall extends physical{
                             if(a==1){
                                 transition.trigger++
                                 transition.scene='menu'
-                                transition.zone=0
                             }
                         break
                     }
@@ -421,6 +449,12 @@ class wall extends physical{
                             this.collide[a][b].timers[0]=5
                             this.collide[a][b].velocity.y=constrain(this.collide[a][b].velocity.y,-2.4,0.8)
                             this.collide[a][b].movement.jump=2.4
+                        }else if(this.type==35){
+                            if(!this.hit){
+                                game.check.x=this.position.x
+                                game.check.y=this.position.y
+                                this.hit=true
+                            }
                         }else if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){
                             this.collide[a][b].position.y=this.position.y+this.height/2+this.collide[a][b].height/2
                             this.collide[a][b].velocity.y=0

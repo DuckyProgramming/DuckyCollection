@@ -8,6 +8,7 @@ function mouseClicked(){
 					transition.scene='level'
 					transition.level=a
 					transition.zone=0
+					transition.dead=false
 				}
 			}
 		break

@@ -7,7 +7,7 @@ class enemy extends partisan{
         this.mode=0
         this.ice=0
         switch(this.type){
-            case 2: case 4:
+            case 2: case 4: case 6:
                 this.trigger.physics.gravity=false
             break
             case 5:
@@ -78,9 +78,17 @@ class enemy extends partisan{
                     }
                     this.layer.translate(0,sin(this.time*10)*-2)
                 break
-                case 5:
-                    this.layer.fill(0,this.fade)
+                case 5: case 6:
                     this.layer.noStroke()
+                    if(this.type==6){
+                        this.layer.fill(135,this.fade)
+                        this.layer.rect(0,0,28,20,4)
+                        this.layer.stroke(0,this.fade)
+                        this.layer.strokeWeight(4)
+                        this.layer.line(sin(this.time*15)*-18,-14,sin(this.time*15)*18,-14)
+                        this.layer.noStroke()
+                    }
+                    this.layer.fill(0,this.fade)
                     this.layer.ellipse(0,0,18,28)
                     this.layer.stroke(0,this.fade)
                     this.layer.strokeWeight(4)

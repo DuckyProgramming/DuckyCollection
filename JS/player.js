@@ -131,7 +131,7 @@ class player extends partisan{
             break
         }
         if(this.type==2){
-            this.velocity.x*=0.99
+            this.velocity.x*=0.975
         }
         if(this.type==1){
             this.velocity.x*=1.05

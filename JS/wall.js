@@ -3,7 +3,7 @@ class wall extends physical{
 		super(layer,x,y,type,width,height)
 		this.collide=[entities.enemies,entities.players]
         switch(this.type){
-            case 3: case 32: case 41:
+            case 3: case 32: case 41: case 43:
                 this.position.x-=5
                 this.position.y+=game.tileSize*0.3
                 this.width-=10
@@ -326,13 +326,17 @@ class wall extends physical{
                     }
                 }
             break
-            case 32: case 41:
+            case 32: case 41: case 43:
                 if(this.type==32){
                     this.layer.stroke(105,this.fade)
                     this.layer.strokeWeight(6)
                     this.layer.noFill()
                 }else if(this.type==41){
                     this.layer.stroke(200,255,255,this.fade)
+                    this.layer.strokeWeight(6)
+                    this.layer.noFill()
+                }else if(this.type==43){
+                    this.layer.stroke(120,0,0,this.fade)
                     this.layer.strokeWeight(6)
                     this.layer.noFill()
                 }
@@ -498,6 +502,11 @@ class wall extends physical{
                             if(a==1&&this.collide[a][b].type!=2){
                                 this.collide[a][b].type=2
                                 entities.particles.push(new particle(this.layer,this.collide[a][b].position.x,this.collide[a][b].position.y,0,[180,0,0]))
+                            }
+                        break
+                        case 43:
+                            if(this.collide[a][b].type!=2){
+                                this.collide[a][b].dead=true
                             }
                         break
                         

@@ -21,6 +21,9 @@ class player extends partisan{
                 case 2:
                     this.layer.fill(100,0,0,this.fade)
                 break
+                case 3:
+                    this.layer.fill(200,100,0,this.fade)
+                break
             }
             this.layer.noStroke()
             this.layer.ellipse(-cos(this.anim.rate*5)-8,22,16,16)
@@ -47,6 +50,9 @@ class player extends partisan{
                 case 2:
                     this.layer.fill(225,25,25,this.fade)
                 break
+                case 3:
+                    this.layer.fill(150,75,50,this.fade)
+                break
             }
             this.layer.ellipse(this.anim.direction*16,-10,20,12)
             switch(this.type){
@@ -58,6 +64,9 @@ class player extends partisan{
                 break
                 case 2:
                     this.layer.stroke(255,50,50,this.fade)
+                break
+                case 3:
+                    this.layer.stroke(255,125,25,this.fade)
                 break
             }
             this.layer.strokeWeight(1)
@@ -129,6 +138,9 @@ class player extends partisan{
                 stage.focus.x=this.position.x
                 stage.focus.y=game.edge.y/2
             break
+        }
+        if(this.type==3){
+            this.velocity.y=constrain(this.velocity.y,-10,1.5)
         }
         if(this.type==2){
             this.velocity.x*=0.975

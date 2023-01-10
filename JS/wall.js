@@ -370,6 +370,17 @@ class wall extends physical{
                 this.layer.textSize(8)
                 this.layer.text('Exit',0,0)
             break
+            case 38:
+                this.layer.fill(200,255,255,this.fade*0.6)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.stroke(255,this.fade)
+                this.layer.strokeWeight(2)
+                for(let a=0,la=this.width/game.tileSize;a<la;a++){
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-10,-10,-this.width/2+this.width*a/la+game.tileSize/2+10,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-10,5,-this.width/2+this.width*a/la+game.tileSize/2-5,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2+10,-5,-this.width/2+this.width*a/la+game.tileSize/2+5,-10)
+                }
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -436,6 +447,12 @@ class wall extends physical{
                             if(a==1){
                                 transition.trigger++
                                 transition.scene='menu'
+                            }
+                        break
+                        case 38:
+                            if(a==1&&this.collide[a][b].type!=1){
+                                this.collide[a][b].type=1
+                                entities.particles.push(new particle(this.layer,this.collide[a][b].position.x,this.collide[a][b].position.y,0,[200,255,255]))
                             }
                         break
                     }

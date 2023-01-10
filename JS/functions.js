@@ -158,6 +158,7 @@ function resetWorld(){
 	entities.walls=[]
 	entities.enemies=[]
 	entities.players=[]
+	entities.particles=[]
 }
 function generateWorld(layer,level){
 	if(level.length>0&&level[0].length>0){
@@ -192,13 +193,13 @@ function generateWorld(layer,level){
 	}
 	switch(game.level){
 		case 0:
-			run={back:[],fore:[entities.walls,entities.enemies,entities.players]}
+			run={back:[],fore:[entities.walls,entities.enemies,entities.players,entities.particles]}
 		break
 		case 1:
 			for(let a=0;a<10;a++){
 				entities.clouds.push(new cloud(layer))
 			}
-			run={back:[entities.clouds],fore:[entities.walls,entities.enemies,entities.players]}
+			run={back:[entities.clouds],fore:[entities.walls,entities.enemies,entities.players,entities.particles]}
 		break
 	}
 }

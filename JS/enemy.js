@@ -5,6 +5,7 @@ class enemy extends partisan{
         this.anim={direction:0,rate:0}
         this.movement={speed:0.1,jump:6}
         this.mode=0
+        this.ice=0
         switch(this.type){
             case 2: case 4:
                 this.trigger.physics.gravity=false
@@ -85,8 +86,8 @@ class enemy extends partisan{
                     this.layer.strokeWeight(4)
                     this.layer.line(-3,5,-cos(this.anim.rate*5)*2-8,32)
                     this.layer.line(3,5,cos(this.anim.rate*5)*2+8,32)
-                    this.layer.line(-6,-6,-cos(this.anim.rate*5)*2-12,15)
-                    this.layer.line(6,-6,cos(this.anim.rate*5)*2+12,15)
+                    this.layer.line(-6,-6,-cos(this.anim.rate*5)*2-12,18)
+                    this.layer.line(6,-6,cos(this.anim.rate*5)*2+12,18)
                     this.layer.fill(255,this.fade)
                     this.layer.noStroke()
                     this.layer.triangle(-6,-10,6,-10,this.anim.direction*4,-2)
@@ -105,6 +106,11 @@ class enemy extends partisan{
                     this.layer.noStroke()
                     this.layer.rect(0,-36,16,12,3)
                 break
+            }
+            if(this.ice>0){
+                this.layer.fill(200,255,255,this.fade*min(this.ice/60,0.5))
+                this.layer.noStroke()
+                this.layer.rect(0,0,this.width*1.5,this.height*1.5)
             }
             this.layer.scale(1/this.size)
             this.layer.translate(-this.position.x-this.offset.position.x,-this.position.y-this.offset.position.y)
@@ -133,9 +139,17 @@ class enemy extends partisan{
             this.mode=0
         }
         if(floor(random(0,60))==0){
-            this.mode=1-this.mode
+            if(this.mode<0||this.mode>1){
+                this.mode=floor(random(0,2))
+            }else{
+                this.mode=1-this.mode
+            }
         }
-        if(!this.dead){
+        if(this.ice>0){
+            this.ice--
+            this.mode=2
+        }
+        else if(!this.dead){
             for(let a=0,la=entities.players.length;a<la;a++){
                 if(boxInsideBox(entities.players[a],this)&&!entities.players[a].dead){
                     if(entities.players[a].position.y<this.position.y-this.height/2){
@@ -147,6 +161,8 @@ class enemy extends partisan{
                         }else{
                             entities.players[a].velocity.y=-entities.players[a].movement.jump*0.5
                         }
+                    }else if(entities.players[a].type==1){
+                        this.ice=300
                     }else{
                         entities.players[a].dead=true
                     }

@@ -11,7 +11,14 @@ class player extends partisan{
         if(this.fade>0&&this.size>0){
             this.layer.translate(this.position.x+this.offset.position.x,this.position.y+this.offset.position.y)
             this.layer.scale(this.size)
-            this.layer.fill(255,235,0,this.fade)
+            switch(this.type){
+                case 0:
+                    this.layer.fill(255,235,0,this.fade)
+                break
+                case 1:
+                    this.layer.fill(150,255,255,this.fade)
+                break
+            }
             this.layer.noStroke()
             this.layer.ellipse(-cos(this.anim.rate*5)-8,22,16,16)
             this.layer.ellipse(cos(this.anim.rate*5)+8,22,16,16)
@@ -27,9 +34,23 @@ class player extends partisan{
             this.layer.ellipse(10+min(0,this.anim.direction)*20,0,20,14)
             this.layer.rotate(sin(this.time*10)*20)
             this.layer.translate(-5-min(0,this.anim.direction)*10,-5)
-            this.layer.fill(255,125,0,this.fade)
+            switch(this.type){
+                case 0:
+                    this.layer.fill(255,125,0,this.fade)
+                break
+                case 1:
+                    this.layer.fill(50,255,255,this.fade)
+                break
+            }
             this.layer.ellipse(this.anim.direction*16,-10,20,12)
-            this.layer.stroke(0,this.fade)
+            switch(this.type){
+                case 0:
+                    this.layer.stroke(0,this.fade)
+                break
+                case 1:
+                    this.layer.stroke(0,150,255,this.fade)
+                break
+            }
             this.layer.strokeWeight(1)
             this.layer.line(-9+this.anim.direction*16,-10,9+this.anim.direction*16,-10)
             if(this.anim.direction>-0.7){
@@ -98,6 +119,13 @@ class player extends partisan{
             case 1: case 2:
                 stage.focus.x=this.position.x
                 stage.focus.y=game.edge.y/2
+            break
+        }
+        if(this.type==1){
+            this.velocity.x*=1.05
+            this.trigger.physics.friction=false
+        }else{
+            this.trigger.physics.friction=true
         }
         super.update()
     }

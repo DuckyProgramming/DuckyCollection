@@ -381,6 +381,10 @@ class wall extends physical{
                     this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2+10,-5,-this.width/2+this.width*a/la+game.tileSize/2+5,-10)
                 }
             break
+            case 39:
+                this.layer.fill(255,0,255,this.fade*0.5)
+                this.layer.rect(0,0,this.width,this.height)
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -466,10 +470,18 @@ class wall extends physical{
                             this.collide[a][b].timers[0]=5
                             this.collide[a][b].velocity.y=constrain(this.collide[a][b].velocity.y,-2.4,0.8)
                             this.collide[a][b].movement.jump=2.4
+                        }else if(this.type==39){
+                            this.collide[a][b].timers[0]=5
+                            this.collide[a][b].velocity.y=constrain(this.collide[a][b].velocity.y,-2.4,0.8)
+                            this.collide[a][b].movement.jump=2.4
+                            if(this.collide[a][b].type!=0){
+                                this.collide[a][b].dead=true
+                            }
                         }else if(this.type==35){
                             if(!this.hit){
                                 game.check.x=this.position.x
                                 game.check.y=this.position.y
+                                game.check.type=this.collide[a][b].type
                                 this.hit=true
                             }
                         }else if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){

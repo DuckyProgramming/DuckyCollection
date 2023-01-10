@@ -174,11 +174,12 @@ function generateWorld(layer,level){
 					entities.enemies.push(new enemy(layer,b*game.tileSize+game.tileSize/2,a*game.tileSize+game.tileSize/2,-level[a][b]-1))
 				}else if(level[a][b]==-1){
 					if(transition.dead){
-						entities.players.push(new player(layer,game.check.x,game.check.y))
+						entities.players.push(new player(layer,game.check.x,game.check.y,game.check.type))
 					}else{
-						entities.players.push(new player(layer,b*game.tileSize+game.tileSize/2,a*game.tileSize+game.tileSize/2))
+						entities.players.push(new player(layer,b*game.tileSize+game.tileSize/2,a*game.tileSize+game.tileSize/2,0))
 						game.check.x=b*game.tileSize+game.tileSize/2
 						game.check.y=a*game.tileSize+game.tileSize/2
+						game.check.type=0
 					}
 				}
 			}

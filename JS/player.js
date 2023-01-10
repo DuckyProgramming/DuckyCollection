@@ -1,6 +1,6 @@
 class player extends partisan{
-    constructor(layer,x,y){
-        super(layer,x,y,0,30,50)
+    constructor(layer,x,y,type){
+        super(layer,x,y,type,30,50)
         this.offset={position:{x:0,y:0}}
         this.anim={direction:0,rate:0}
         this.movement={speed:0.4,jump:12}

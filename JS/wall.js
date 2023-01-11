@@ -3,8 +3,7 @@ class wall extends physical{
 		super(layer,x,y,type,width,height)
 		this.collide=[entities.enemies,entities.players]
         switch(this.type){
-            case 3: case 32: case 41: case 43:
-                this.position.x-=5
+            case 3: case 32: case 41: case 43: case 47:
                 this.position.y+=game.tileSize*0.3
                 this.width-=10
                 this.height*=0.4
@@ -67,11 +66,11 @@ class wall extends physical{
                     this.layer.stroke(255,145,0,this.fade)
                     this.layer.strokeWeight(8)
                     this.layer.fill(255,145,0,this.fade)
-                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-16,6,-this.width/2+this.width*a/la+game.tileSize/2+16,6)
-                    this.layer.triangle(-this.width/2+this.width*a/la+game.tileSize/2-12,6,-this.width/2+this.width*a/la+game.tileSize/2+12,6,-this.width/2+this.width*a/la+game.tileSize/2,-19)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-21,6,-this.width/2+this.width*a/la+game.tileSize/2+11,6)
+                    this.layer.triangle(-this.width/2+this.width*a/la+game.tileSize/2-17,6,-this.width/2+this.width*a/la+game.tileSize/2+7,6,-this.width/2+this.width*a/la+game.tileSize/2-5,-19)
                     this.layer.noStroke()
                     this.layer.fill(255,this.fade)
-                    this.layer.quad(-this.width/2+this.width*a/la+game.tileSize/2-12,-3,-this.width/2+this.width*a/la+game.tileSize/2+12,-3,-this.width/2+this.width*a/la+game.tileSize/2+8,-12,-this.width/2+this.width*a/la+game.tileSize/2-8,-12)
+                    this.layer.quad(-this.width/2+this.width*a/la+game.tileSize/2-17,-3,-this.width/2+this.width*a/la+game.tileSize/2+7,-3,-this.width/2+this.width*a/la+game.tileSize/2+3,-12,-this.width/2+this.width*a/la+game.tileSize/2-13,-12)
                 }
             break
             case 4:
@@ -341,11 +340,11 @@ class wall extends physical{
                     this.layer.noFill()
                 }
                 for(let a=0,la=this.width/game.tileSize;a<la;a++){
-                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2,-15,-this.width/2+this.width*a/la+game.tileSize/2,10)
-                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2,5,-this.width/2+this.width*a/la+game.tileSize/2-10,10)
-                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2,5,-this.width/2+this.width*a/la+game.tileSize/2+10,10)
-                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-8,0,-this.width/2+this.width*a/la+game.tileSize/2-8,10)
-                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2+8,0,-this.width/2+this.width*a/la+game.tileSize/2+8,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-5,-15,-this.width/2+this.width*a/la+game.tileSize/2-5,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-5,5,-this.width/2+this.width*a/la+game.tileSize/2-15,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-5,5,-this.width/2+this.width*a/la+game.tileSize/2+5,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-13,0,-this.width/2+this.width*a/la+game.tileSize/2-13,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2+3,0,-this.width/2+this.width*a/la+game.tileSize/2+3,10)
                 }
             break
             case 33:
@@ -446,6 +445,13 @@ class wall extends physical{
                         this.layer.rect(-this.width/2+this.width*b/lb+game.tileSize/2,0,game.tileSize-4-a*8,game.tileSize-4-a*8)
                     }
                 }
+            break
+            case 47:
+                this.layer.fill(200,150,100,this.fade)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.fill(160,120,80,this.fade)
+                this.layer.ellipse(-this.width/4,0,10,10)
+                this.layer.ellipse(this.width/4,0,10,10)
             break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
@@ -576,7 +582,7 @@ class wall extends physical{
                             this.collide[a][b].timers[0]=5
                             this.collide[a][b].velocity.y=constrain(this.collide[a][b].velocity.y,-2.4,0.8)
                             this.collide[a][b].movement.jump=2.4
-                            if(this.collide[a][b].type!=0){
+                            if(this.collide[a][b].type!=0&&this.collide[a][b].type!=5){
                                 this.collide[a][b].dead=true
                             }
                         }else if(this.type==35){
@@ -609,6 +615,8 @@ class wall extends physical{
                                 this.collide[a][b].position.x-=2
                             }else if(this.type==19){
                                 this.collide[a][b].velocity.x*=1.2
+                            }else if(this.type==47){
+                                this.collide[a][b].velocity.y=-40
                             }
                         }
                         else if(boxCollideBox(this,this.collide[a][b])==2&&this.collide[a][b].velocity.x<0){

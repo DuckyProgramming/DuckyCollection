@@ -16,5 +16,6 @@ class cloud extends entity{
             this.position.y-random(-80,630)
             this.speed=random(1,1.5)
         }
+        super.update()
     }
 }

@@ -155,6 +155,7 @@ function updateMouse(layer){
 	inputs.rel.y=(inputs.mouse.y-height/2)/stage.scale+layer.height/2
 }
 function resetWorld(){
+	entities.clouds=[]
 	entities.walls=[]
 	entities.enemies=[]
 	entities.players=[]

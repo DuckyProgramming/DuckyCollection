@@ -10,7 +10,11 @@ class partisan extends physical{
 	update(){
 		super.update()
 		this.position.x=constrain(this.position.x,0,game.edge.x)
-		this.position.y=min(this.position.y,game.edge.y)
+		if(game.level==2&&this.position.y>game.edge.y){
+			this.dead=true
+		}else{
+			this.position.y=min(this.position.y,game.edge.y)
+		}
 		this.anim.direction=constrain(this.anim.direction,-1,1)
         this.anim.rate+=this.velocity.x
 		if(this.dead){

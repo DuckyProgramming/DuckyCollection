@@ -464,6 +464,33 @@ class wall extends physical{
                 this.layer.strokeWeight(16)
                 this.layer.line(-this.width/2+4,-this.height/2+6,this.width/2-4,-this.height/2+6)
             break
+            case 50:
+                this.layer.fill(50,100,150,this.fade)
+                for(let a=0,la=this.height/game.tileSize*4;a<la;a++){
+                    if(a%2==0){
+                        for(let b=0,lb=this.width/game.tileSize*2;b<lb;b++){
+                            this.layer.rect(-this.width/2+this.width*b/lb+game.tileSize/4,-this.height/2+this.height*a/la+game.tileSize/8,game.tileSize/2-1.5,game.tileSize/4-1.5,1.5)
+                        }
+                    }else{
+                        this.layer.rect(-this.width/2+game.tileSize/8,-this.height/2+this.height*a/la+game.tileSize/8,game.tileSize/4-1.5,game.tileSize/4-1.5,1.5)
+                        this.layer.rect(this.width/2-game.tileSize/8,-this.height/2+this.height*a/la+game.tileSize/8,game.tileSize/4-1.5,game.tileSize/4-1.5,1.5)
+                        for(let b=0,lb=this.width/game.tileSize*2-1;b<lb;b++){
+                            this.layer.rect(-this.width/2+this.width*b/(lb+1)+game.tileSize/2,-this.height/2+this.height*a/la+game.tileSize/8,game.tileSize/2-1.5,game.tileSize/4-1.5,1.5)
+                        }
+                    }
+                }
+            break
+            case 51:
+                this.layer.fill(255,this.fade*0.075)
+                this.layer.rotate(this.time*3)
+                for(let a=0;a<12;a++){
+                    this.layer.rotate(5)
+                    for(let b=0;b<10;b++){
+                        this.layer.arc(0,0,b*8,b*8,a*36,a*36+18)
+                    }
+                }
+                this.layer.rotate(-this.time*3-60)
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -513,7 +540,7 @@ class wall extends physical{
                                 this.collide[a][b].dead=true
                             }
                         break
-                        case 21: case 37:
+                        case 21: case 37: case 51:
                             if(a==1){
                                 transition.trigger++
                                 transition.scene='level'

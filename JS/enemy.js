@@ -163,7 +163,7 @@ class enemy extends partisan{
                     if(entities.players[a].type==2){
                         this.dead=true
                         entities.particles.push(new particle(this.layer,this.position.x,this.position.y,0,[180,0,0]))
-                    }else if(entities.players[a].position.y<this.position.y-this.height/2){
+                    }else if(entities.players[a].position.y<this.position.y-this.height/2&&entities.players[a].type!=3){
                         if(this.type!=3&&this.type!=4){
                             this.dead=true
                         }

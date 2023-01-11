@@ -140,7 +140,7 @@ class player extends partisan{
             break
         }
         if(this.type==3){
-            this.velocity.y=constrain(this.velocity.y,-10,1.5)
+            this.velocity.y=constrain(this.velocity.y-physics.gravity/4,-10,1.5)
         }
         if(this.type==2){
             this.velocity.x*=0.975

@@ -518,7 +518,14 @@ class wall extends physical{
                 this.layer.fill(180,this.fade)
                 for(let a=0,la=this.width/game.tileSize;a<la;a++){
                     for(let b=0,lb=this.height/game.tileSize;b<lb;b++){
-                        this.layer.ellipse(-this.width/2+this.width*a/la+game.tileSize/2,-this.height/2+this.height*a/la+game.tileSize/2,12,12)
+                        this.layer.ellipse(-this.width/2+this.width*a/la+game.tileSize/2,-this.height/2+this.height*b/lb+game.tileSize/2,12,12)
+                        for(let c=0;c<8;c++){
+                            this.layer.triangle(
+                                -this.width/2+this.width*a/la+game.tileSize/2+sin(this.time*4+c*45)*32*((c%2)*0.2+0.8),-this.height/2+this.height*b/lb+game.tileSize/2+cos(this.time*4+c*45)*32*((c%2)*0.2+0.8),
+                                -this.width/2+this.width*a/la+game.tileSize/2+cos(this.time*4+c*45)*4*((c%2)*0.2+0.8),-this.height/2+this.height*b/lb+game.tileSize/2-sin(this.time*4+c*45)*4*((c%2)*0.2+0.8),
+                                -this.width/2+this.width*a/la+game.tileSize/2-cos(this.time*4+c*45)*4*((c%2)*0.2+0.8),-this.height/2+this.height*b/lb+game.tileSize/2+sin(this.time*4+c*45)*4*((c%2)*0.2+0.8),
+                            )
+                        }
                     }
                 }
             break
@@ -578,7 +585,7 @@ class wall extends physical{
             for(let b=0,lb=this.collide[a].length;b<lb;b++){
                 if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)&&!(this.type==5&&this.timers[0]>30)&&!(this.type==6&&this.z<0.5)&&!((this.type==10||this.type==24)&&this.z<0.9)&&!this.collide[a][b].dead){
                     switch(this.type){
-                        case 3: case 10: case 23: case 24: case 32:
+                        case 3: case 10: case 23: case 24: case 32: case 56:
                             this.collide[a][b].dead=true
                         break
                         case 5:

@@ -169,7 +169,7 @@ function generateWorld(layer,level){
 		stage.focus.y=game.edge.y/2
 		for(let a=0,la=level.length;a<la;a++){
 			for(let b=0,lb=level[a].length;b<lb;b++){
-				if(level[a][b]>=100&&floor(level[a][b]/100)!=4&&floor(level[a][b]/100)!=31){
+				if(level[a][b]>=100&&floor(level[a][b]/100)!=4&&floor(level[a][b]/100)!=31&&floor(level[a][b]/100)!=56){
 					entities.walls.push(new wall(layer,b*game.tileSize+floor((level[a][b]%100)/10)*game.tileSize/2+game.tileSize/2,a*game.tileSize+(level[a][b]%10)*game.tileSize/2+game.tileSize/2,floor(level[a][b]/100),floor((level[a][b]%100)/10)*game.tileSize+game.tileSize,(level[a][b]%10)*game.tileSize+game.tileSize))
 				}else if(level[a][b]<-1){
 					entities.enemies.push(new enemy(layer,b*game.tileSize+game.tileSize/2,a*game.tileSize+game.tileSize/2,-level[a][b]-1))
@@ -187,7 +187,7 @@ function generateWorld(layer,level){
 		}
 		for(let a=0,la=level.length;a<la;a++){
 			for(let b=0,lb=level[a].length;b<lb;b++){
-				if(level[a][b]>=100&&(floor(level[a][b]/100)==4||floor(level[a][b]/100)==31)){
+				if(level[a][b]>=100&&(floor(level[a][b]/100)==4||floor(level[a][b]/100)==31||floor(level[a][b]/100)==56)){
 					entities.walls.push(new wall(layer,b*game.tileSize+floor((level[a][b]%100)/10)*game.tileSize/2+game.tileSize/2,a*game.tileSize+(level[a][b]%10)*game.tileSize/2+game.tileSize/2,floor(level[a][b]/100),floor((level[a][b]%100)/10)*game.tileSize+game.tileSize,(level[a][b]%10)*game.tileSize+game.tileSize))
 				}
 			}

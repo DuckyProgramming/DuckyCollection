@@ -435,6 +435,18 @@ class wall extends physical{
                     }
                 }
             break
+            case 46:
+                this.layer.fill(150,50,150,this.fade*0.2)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.strokeWeight(4)
+                this.layer.noFill()
+                for(let a=0;a<6;a++){
+                    this.layer.stroke(150,50,150,this.fade*(0.9-a*0.15))
+                    for(let b=0,lb=this.width/game.tileSize;b<lb;b++){
+                        this.layer.rect(-this.width/2+this.width*b/lb+game.tileSize/2,0,game.tileSize-4-a*8,game.tileSize-4-a*8)
+                    }
+                }
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -543,6 +555,12 @@ class wall extends physical{
                                 entities.particles.push(new particle(this.layer,this.collide[a][b].position.x,this.collide[a][b].position.y,0,[0,255,75]))
                             }
                         break
+                        case 46:
+                            if(a==1&&this.collide[a][b].type!=5){
+                                this.collide[a][b].type=5
+                                entities.particles.push(new particle(this.layer,this.collide[a][b].position.x,this.collide[a][b].position.y,0,[150,50,150]))
+                            }
+                        break
                     }
                     if(!this.collide[a][b].dead){
                         if(this.type==18){
@@ -575,7 +593,7 @@ class wall extends physical{
                         }
                         else if(boxCollideBox(this,this.collide[a][b])==1&&this.collide[a][b].velocity.y>0){
                             this.collide[a][b].position.y=this.position.y-this.height/2-this.collide[a][b].height/2
-                            if(this.type==4){
+                            if(this.type==4||this.collide[a][b].type==5&&this.collide[a][b].velocity.y>1){
                                 this.collide[a][b].velocity.y*=-0.95
                             }else{
                                 this.collide[a][b].velocity.y=0

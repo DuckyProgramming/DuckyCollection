@@ -15,6 +15,9 @@ function draw(){
 				case 1:
 					graphics.main.background(0,150,255)
 				break
+				case 2:
+					graphics.main.image(graphics.backgrounds[0],0,0,600,600)
+				break
 			}
 			for(let a=0,la=run.back.length;a<la;a++){
 				for(let b=0,lb=run.back[a].length;b<lb;b++){

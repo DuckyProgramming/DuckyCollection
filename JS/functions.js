@@ -194,7 +194,7 @@ function generateWorld(layer,level){
 		}
 	}
 	switch(game.level){
-		case 0:
+		case 0: case 2:
 			run={back:[],fore:[entities.walls,entities.enemies,entities.players,entities.particles]}
 		break
 		case 1:

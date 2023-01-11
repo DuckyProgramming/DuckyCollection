@@ -453,6 +453,17 @@ class wall extends physical{
                 this.layer.ellipse(-this.width/4,0,10,10)
                 this.layer.ellipse(this.width/4,0,10,10)
             break
+            case 48:
+                this.layer.fill(35,65,95,this.fade)
+                this.layer.rect(0,0,this.width,this.height)
+            break
+            case 49:
+                this.layer.fill(35,65,95,this.fade)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.stroke(20,40,60,this.fade)
+                this.layer.strokeWeight(16)
+                this.layer.line(-this.width/2+4,-this.height/2+6,this.width/2-4,-this.height/2+6)
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}

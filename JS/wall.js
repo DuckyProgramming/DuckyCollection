@@ -50,6 +50,13 @@ class wall extends physical{
                 }
                 this.height/=2
             break
+            case 54:
+                this.break=false
+                this.height/=2
+            break
+            case 55:
+                this.height/=2
+            break
         }
 	}
 	display(){
@@ -465,14 +472,14 @@ class wall extends physical{
                 this.layer.fill(35,65,95,this.fade)
                 this.layer.rect(0,0,this.width,this.height)
             break
-            case 49:
+            case 49: case 55:
                 this.layer.fill(35,65,95,this.fade)
                 this.layer.rect(0,0,this.width,this.height)
                 this.layer.stroke(20,40,60,this.fade)
-                this.layer.strokeWeight(16)
-                this.layer.line(-this.width/2+4,-this.height/2+6,this.width/2-4,-this.height/2+6)
+                this.layer.strokeWeight(8)
+                this.layer.line(-this.width/2+2,-this.height/2+3,this.width/2-2,-this.height/2+3)
             break
-            case 50:
+            case 50: case 54:
                 this.layer.fill(50,100,150,this.fade)
                 for(let a=0,la=this.height/game.tileSize*4;a<la;a++){
                     if(a%2==0){
@@ -505,6 +512,14 @@ class wall extends physical{
                 this.layer.rect(0,this.height*0.4,this.width,this.height*0.2)
                 for(let a=0;a<5;a++){
                     this.layer.rect(-this.width/2+a*this.width*9/40+this.width*0.05,0,this.width*0.1,this.height)
+                }
+            break
+            case 56:
+                this.layer.fill(180,this.fade)
+                for(let a=0,la=this.width/game.tileSize;a<la;a++){
+                    for(let b=0,lb=this.height/game.tileSize;b<lb;b++){
+                        this.layer.ellipse(-this.width/2+this.width*a/la+game.tileSize/2,-this.height/2+this.height*a/la+game.tileSize/2,12,12)
+                    }
                 }
             break
 		}
@@ -548,6 +563,14 @@ class wall extends physical{
                 this.position.y--
                 if(this.position.y<-60){
                     this.position.y+=720
+                }
+            break
+            case 54:
+                if(this.break){
+                    this.status=1
+                    if(this.fade<=0){
+                        this.remove=true
+                    }
                 }
             break
         }
@@ -632,6 +655,9 @@ class wall extends physical{
                                 this.collide[a][b].type=5
                                 entities.particles.push(new particle(this.layer,this.collide[a][b].position.x,this.collide[a][b].position.y,0,[150,50,150]))
                             }
+                        break
+                        case 54:
+                            this.break=true
                         break
                     }
                     if(!this.collide[a][b].dead){

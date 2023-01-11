@@ -423,6 +423,18 @@ class wall extends physical{
                     }
                 }
             break
+            case 45:
+                this.layer.fill(50,255,50,this.fade*0.2)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.strokeWeight(4)
+                this.layer.noFill()
+                for(let a=0;a<6;a++){
+                    this.layer.stroke(50,255,50,this.fade*(0.9-a*0.15))
+                    for(let b=0,lb=this.width/game.tileSize;b<lb;b++){
+                        this.layer.rect(-this.width/2+this.width*b/lb+game.tileSize/2,0,game.tileSize-4-a*8,game.tileSize-4-a*8)
+                    }
+                }
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -523,6 +535,12 @@ class wall extends physical{
                             if(a==1&&this.collide[a][b].type!=3){
                                 this.collide[a][b].type=3
                                 entities.particles.push(new particle(this.layer,this.collide[a][b].position.x,this.collide[a][b].position.y,0,[200,100,0]))
+                            }
+                        break
+                        case 45:
+                            if(a==1&&this.collide[a][b].type!=4){
+                                this.collide[a][b].type=4
+                                entities.particles.push(new particle(this.layer,this.collide[a][b].position.x,this.collide[a][b].position.y,0,[0,255,75]))
                             }
                         break
                     }

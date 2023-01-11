@@ -5,6 +5,7 @@ class player extends partisan{
         this.anim={direction:0,rate:0}
         this.movement={speed:0.4,jump:12}
         this.base.movement={jump:this.movement.jump}
+        this.reload=0
         this.hype=false
     }
     display(){
@@ -23,6 +24,9 @@ class player extends partisan{
                 break
                 case 3:
                     this.layer.fill(200,100,0,this.fade)
+                break
+                case 4:
+                    this.layer.fill(0,255,75,this.fade)
                 break
             }
             this.layer.noStroke()
@@ -53,6 +57,9 @@ class player extends partisan{
                 case 3:
                     this.layer.fill(150,75,50,this.fade)
                 break
+                case 4:
+                    this.layer.fill(25,100,0,this.fade)
+                break
             }
             this.layer.ellipse(this.anim.direction*16,-10,20,12)
             switch(this.type){
@@ -67,6 +74,9 @@ class player extends partisan{
                 break
                 case 3:
                     this.layer.stroke(255,125,25,this.fade)
+                break
+                case 4:
+                    this.layer.stroke(150,255,150,this.fade)
                 break
             }
             this.layer.strokeWeight(1)
@@ -138,6 +148,21 @@ class player extends partisan{
                 stage.focus.x=this.position.x
                 stage.focus.y=game.edge.y/2
             break
+        }
+        if(this.reload>0){
+            this.reload--
+        }
+        if(this.type==4&&this.reload<=0&&(inputs.keys[0][3]||inputs.keys[1][3])){
+            if(inputs.keys[0][0]||inputs.keys[1][0]){
+                entities.particles.push(new particle(this.layer,this.position.x,this.position.y,0,[0,255,50]))
+                this.velocity.x-=20
+                this.reload=15
+            }
+            if(inputs.keys[0][1]||inputs.keys[1][1]){
+                entities.particles.push(new particle(this.layer,this.position.x,this.position.y,0,[0,255,50]))
+                this.velocity.x+=20
+                this.reload=15
+            }
         }
         if(this.type==3){
             this.velocity.y=constrain(this.velocity.y-physics.gravity/4,-10,1.5)

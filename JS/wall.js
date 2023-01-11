@@ -529,6 +529,21 @@ class wall extends physical{
                     }
                 }
             break
+            case 57:
+                this.layer.fill(25,50,75,this.fade)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.fill(30,60,90,this.fade)
+                this.layer.triangle(-this.width/2,-this.height/2,-this.width/2,this.height/2,-this.width/2+game.tileSize/4,-this.height/2)
+                for(a=0,la=this.width/game.tileSize*2-1;a<la;a++){
+                    this.layer.quad(
+                        -this.width/2+game.tileSize/2+a*game.tileSize/2,-this.height/2,
+                        -this.width/2+game.tileSize*3/4+a*game.tileSize/2,-this.height/2,
+                        -this.width/2+game.tileSize/2+a*game.tileSize/2,this.height/2,
+                        -this.width/2+game.tileSize/4+a*game.tileSize/2,this.height/2,
+                    )
+                }
+                this.layer.triangle(this.width/2,this.height/2,this.width/2,-this.height/2,this.width/2-game.tileSize/4,this.height/2)
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -578,6 +593,20 @@ class wall extends physical{
                     if(this.fade<=0){
                         this.remove=true
                     }
+                }
+            break
+            case 57:
+                if(this.time%180<60){
+                    this.position.y+=4/3
+                }else if(this.time%180>=90&&this.time%180<150){
+                    this.position.y-=4/3
+                }
+            break
+            case 58:
+                if(this.time%180<60){
+                    this.position.y+=2/3
+                }else if(this.time%180>=90&&this.time%180<150){
+                    this.position.y-=2/3
                 }
             break
         }
@@ -685,58 +714,60 @@ class wall extends physical{
                                 this.collide[a][b].dead=true
                             }
                         }else if(this.type==35){
-                            if(!this.hit){
+                            if(!this.hit&&a==1){
                                 game.check.x=this.position.x
                                 game.check.y=this.position.y
                                 game.check.type=this.collide[a][b].type
                                 this.hit=true
                             }
-                        }else if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){
-                            this.collide[a][b].position.y=this.position.y+this.height/2+this.collide[a][b].height/2
-                            this.collide[a][b].velocity.y=0
-                        }
-                        else if(boxCollideBox(this,this.collide[a][b])==1&&this.collide[a][b].velocity.y>0){
-                            this.collide[a][b].position.y=this.position.y-this.height/2-this.collide[a][b].height/2
-                            if(this.type==4||this.collide[a][b].type==5&&this.collide[a][b].velocity.y>1){
-                                this.collide[a][b].velocity.y*=-0.95
-                            }else{
+                        }else{
+                            this.collide[a][b].squish[boxCollideBox(this,this.collide[a][b])]=true
+                            if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){
+                                this.collide[a][b].position.y=this.position.y+this.height/2+this.collide[a][b].height/2
                                 this.collide[a][b].velocity.y=0
                             }
-                            this.collide[a][b].velocity.x*=(1-physics.friction)
-                            this.collide[a][b].timers[0]=5
-                            if(this.type==8){
-                                this.collide[a][b].velocity.x*=1.1
-                            }else if(this.type==16){
-                                this.collide[a][b].position.x+=2
-                            }else if(this.type==17){
-                                this.collide[a][b].position.x-=2
-                            }else if(this.type==19){
-                                this.collide[a][b].velocity.x*=1.2
-                            }else if(this.type==47){
-                                this.collide[a][b].velocity.y=-40
-                            }else if(this.type==52){
-                                this.collide[a][b].velocity.y=1
-                            }else if(this.type==53){
-                                this.collide[a][b].velocity.y=-1
+                            else if(boxCollideBox(this,this.collide[a][b])==1&&this.collide[a][b].velocity.y>0){
+                                this.collide[a][b].position.y=this.position.y-this.height/2-this.collide[a][b].height/2
+                                if(this.type==4||a==1&&this.collide[a][b].type==5&&this.collide[a][b].velocity.y>1){
+                                    this.collide[a][b].velocity.y*=-0.95
+                                }else{
+                                    this.collide[a][b].velocity.y=0
+                                }
+                                this.collide[a][b].velocity.x*=(1-physics.friction)
+                                this.collide[a][b].timers[0]=5
+                                if(this.type==8){
+                                    this.collide[a][b].velocity.x*=1.1
+                                }else if(this.type==16){
+                                    this.collide[a][b].position.x+=2
+                                }else if(this.type==17){
+                                    this.collide[a][b].position.x-=2
+                                }else if(this.type==19){
+                                    this.collide[a][b].velocity.x*=1.2
+                                }else if(this.type==47){
+                                    this.collide[a][b].velocity.y=-40
+                                }else if(this.type==52){
+                                    this.collide[a][b].velocity.y=1
+                                }else if(this.type==53){
+                                    this.collide[a][b].velocity.y=-1
+                                }
+                            }
+                            else if(boxCollideBox(this,this.collide[a][b])==2&&this.collide[a][b].velocity.x<0){
+                                this.collide[a][b].position.x=this.position.x+this.width/2+this.collide[a][b].width/2
+                                this.collide[a][b].velocity.x=0
+                                this.collide[a][b].velocity.y*=(1-physics.friction)
+                                if(a==0&&this.collide[a][b].mode==0){
+                                    this.collide[a][b].mode=1
+                                }
+                            }
+                            else if(boxCollideBox(this,this.collide[a][b])==3&&this.collide[a][b].velocity.x>0){
+                                this.collide[a][b].position.x=this.position.x-this.width/2-this.collide[a][b].width/2
+                                this.collide[a][b].velocity.x=0
+                                this.collide[a][b].velocity.y*=(1-physics.friction)
+                                if(a==0&&this.collide[a][b].mode==1){
+                                    this.collide[a][b].mode=0
+                                }
                             }
                         }
-                        else if(boxCollideBox(this,this.collide[a][b])==2&&this.collide[a][b].velocity.x<0){
-                            this.collide[a][b].position.x=this.position.x+this.width/2+this.collide[a][b].width/2
-                            this.collide[a][b].velocity.x=0
-                            this.collide[a][b].velocity.y*=(1-physics.friction)
-                            if(a==0&&this.collide[a][b].mode==0){
-                                this.collide[a][b].mode=1
-                            }
-                        }
-                        else if(boxCollideBox(this,this.collide[a][b])==3&&this.collide[a][b].velocity.x>0){
-                            this.collide[a][b].position.x=this.position.x-this.width/2-this.collide[a][b].width/2
-                            this.collide[a][b].velocity.x=0
-                            this.collide[a][b].velocity.y*=(1-physics.friction)
-                            if(a==0&&this.collide[a][b].mode==1){
-                                this.collide[a][b].mode=0
-                            }
-                        }
-                        this.collide[a][b].squish[boxCollideBox(this,this.collide[a][b])]=true
                     }
                 }
             }

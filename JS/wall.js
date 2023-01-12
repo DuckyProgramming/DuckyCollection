@@ -580,6 +580,17 @@ class wall extends physical{
                 }
                 this.layer.rotate(this.position.x*-3)
             break
+            case 61:
+                this.layer.fill(125,200,255,this.fade)
+                this.layer.rect(0,0,this.width,this.height)
+                this.layer.stroke(150,225,255,this.fade)
+                this.layer.strokeWeight(4)
+                for(let a=0,la=this.width/game.tileSize;a<la;a++){
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-10,-10,-this.width/2+this.width*a/la+game.tileSize/2+10,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2-10,5,-this.width/2+this.width*a/la+game.tileSize/2-5,10)
+                    this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2+10,-5,-this.width/2+this.width*a/la+game.tileSize/2+5,-10)
+                }
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -804,6 +815,8 @@ class wall extends physical{
                                     this.collide[a][b].velocity.y=1
                                 }else if(this.type==53){
                                     this.collide[a][b].velocity.y=-1
+                                }else if(this.type==61){
+                                    this.collide[a][b].velocity.x*=1.15
                                 }
                             }
                             else if(boxCollideBox(this,this.collide[a][b])==2&&this.collide[a][b].velocity.x<0){

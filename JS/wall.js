@@ -785,7 +785,6 @@ class wall extends physical{
                             }
                         }else if(this.type==59){
                             this.collide[a][b].jumps++
-                            this.collide[a][b].jumped=true
                         }else{
                             this.collide[a][b].squish[boxCollideBox(this,this.collide[a][b])]=true
                             if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){

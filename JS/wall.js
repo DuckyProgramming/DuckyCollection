@@ -62,6 +62,9 @@ class wall extends physical{
                 this.height/=4
                 this.timers=[0]
             break
+            case 60:
+                this.turn=false
+            break
         }
 	}
 	display(){
@@ -555,6 +558,28 @@ class wall extends physical{
                 this.layer.noFill()
                 regPoly(this.layer,0,0,3,this.width*0.8,60)
             break
+            case 60:
+                this.layer.rotate(this.position.x*3)
+                this.layer.fill(225,185,0,this.fade)
+                this.layer.ellipse(0,0,80,80)
+                this.layer.beginShape()
+                this.layer.vertex(-34,-34)
+                this.layer.bezierVertex(10,-36,18,-30,28,-28)
+                this.layer.vertex(-28,28)
+                this.layer.bezierVertex(-30,18,-36,10,-34,-34)
+                this.layer.endShape()
+                this.layer.beginShape()
+                this.layer.vertex(34,34)
+                this.layer.bezierVertex(-10,36,-18,30,-28,28)
+                this.layer.vertex(28,-28)
+                this.layer.bezierVertex(30,-18,36,-10,34,34)
+                this.layer.endShape()
+                for(let a=0;a<9;a++){
+                    this.layer.fill(225-a*6,185-a*5,0)
+                    this.layer.ellipse(0,0,72-a*8,72-a*8)
+                }
+                this.layer.rotate(this.position.x*-3)
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -618,6 +643,22 @@ class wall extends physical{
                     this.position.y+=2/3
                 }else if(this.time%180>=90&&this.time%180<150){
                     this.position.y-=2/3
+                }
+            break
+            case 60:
+                if(this.turn){
+                    this.position.x-=2
+                }else{
+                    this.position.x+=2
+                }
+                for(let a=0,la=entities.walls.length;a<la;a++){
+                    if(boxInsideBox(this,entities.walls[a])){
+                        if(this.turn&&entities.walls[a].position.x<this.position.x){
+                            this.turn=false
+                        }else if(!this.turn&&entities.walls[a].position.x>this.position.x){
+                            this.turn=true
+                        }
+                    }
                 }
             break
         }

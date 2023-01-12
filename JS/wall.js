@@ -388,7 +388,8 @@ class wall extends physical{
                     this.layer.fill(255,this.fade)
                     this.layer.noStroke()
                     this.layer.textSize(8)
-                    this.layer.text('No\nDucks',0,0)
+                    this.layer.text('No',0,-3)
+                    this.layer.text('Ducks',0,3)
                 }
             break
             case 37:
@@ -591,6 +592,18 @@ class wall extends physical{
                     this.layer.line(-this.width/2+this.width*a/la+game.tileSize/2+10,-5,-this.width/2+this.width*a/la+game.tileSize/2+5,-10)
                 }
             break
+            case 62:
+                this.layer.fill(155,85,0,this.fade)
+                this.layer.stroke(105,55,0,this.fade)
+                this.layer.strokeWeight(3)
+                this.layer.rect(0,15,10,10)
+                this.layer.rect(0,0,30,20)
+                this.layer.fill(255,this.fade)
+                this.layer.noStroke()
+                this.layer.textSize(8)
+                this.layer.text('Press',0,-3)
+                this.layer.text('Down',0,3)
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
@@ -675,7 +688,7 @@ class wall extends physical{
         }
 		for(let a=0,la=this.collide.length;a<la;a++){
             for(let b=0,lb=this.collide[a].length;b<lb;b++){
-                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)&&!(this.type==5&&this.timers[0]>30)&&!(this.type==6&&this.z<0.5)&&!((this.type==10||this.type==24)&&this.z<0.9)&&!(this.type==59&&this.timers[0]>0)&&!this.collide[a][b].dead){
+                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)&&!(this.type==5&&this.timers[0]>30)&&!(this.type==6&&this.z<0.5)&&!((this.type==10||this.type==24)&&this.z<0.9)&&!(this.type==59&&this.timers[0]>0)&&this.type!=62&&!this.collide[a][b].dead){
                     switch(this.type){
                         case 3: case 10: case 23: case 24: case 32: case 56:
                             this.collide[a][b].dead=true

@@ -509,7 +509,7 @@ class wall extends physical{
                 for(let a=0;a<12;a++){
                     this.layer.rotate(5)
                     for(let b=0;b<10;b++){
-                        this.layer.arc(0,0,b*8,b*8,a*36,a*36+18)
+                        this.layer.arc(0,0,a*4+4,a*4+4,b*36,b*36+18)
                     }
                 }
                 this.layer.rotate(-this.time*3-60)

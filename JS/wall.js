@@ -57,6 +57,11 @@ class wall extends physical{
             case 55:
                 this.height/=2
             break
+            case 59:
+                this.width/=4
+                this.height/=4
+                this.timers=[0]
+            break
         }
 	}
 	display(){
@@ -529,7 +534,7 @@ class wall extends physical{
                     }
                 }
             break
-            case 57:
+            case 57: case 58:
                 this.layer.fill(25,50,75,this.fade)
                 this.layer.rect(0,0,this.width,this.height)
                 this.layer.fill(30,60,90,this.fade)
@@ -544,12 +549,18 @@ class wall extends physical{
                 }
                 this.layer.triangle(this.width/2,this.height/2,this.width/2,-this.height/2,this.width/2-game.tileSize/4,this.height/2)
             break
+            case 59:
+                this.layer.stroke(255,255,200,this.fade*min(1,max(1-this.timers[0]/15,-15+this.timers[0]/15)))
+                this.layer.strokeWeight(4)
+                this.layer.noFill()
+                regPoly(this.layer,0,0,3,this.width*0.8,60)
+            break
 		}
 		this.layer.translate(-this.position.x,-this.position.y)
 	}
 	update(){
         switch(this.type){
-            case 5:
+            case 5: case 59:
                 if(this.timers[0]>0){
                     this.timers[0]++
                     if(this.timers[0]>=240){
@@ -612,12 +623,12 @@ class wall extends physical{
         }
 		for(let a=0,la=this.collide.length;a<la;a++){
             for(let b=0,lb=this.collide[a].length;b<lb;b++){
-                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)&&!(this.type==5&&this.timers[0]>30)&&!(this.type==6&&this.z<0.5)&&!((this.type==10||this.type==24)&&this.z<0.9)&&!this.collide[a][b].dead){
+                if(boxInsideBox(this,this.collide[a][b])&&this.collide[a][b].timers[1]<=0&&!(a==1&&this.type==1)&&!(this.type==5&&this.timers[0]>30)&&!(this.type==6&&this.z<0.5)&&!((this.type==10||this.type==24)&&this.z<0.9)&&!(this.type==59&&this.timers[0]>0)&&!this.collide[a][b].dead){
                     switch(this.type){
                         case 3: case 10: case 23: case 24: case 32: case 56:
                             this.collide[a][b].dead=true
                         break
-                        case 5:
+                        case 5: case 59:
                             if(this.timers[0]==0){
                                 this.timers[0]++
                             }
@@ -720,6 +731,9 @@ class wall extends physical{
                                 game.check.type=this.collide[a][b].type
                                 this.hit=true
                             }
+                        }else if(this.type==59){
+                            this.collide[a][b].jumps++
+                            this.collide[a][b].jumped=true
                         }else{
                             this.collide[a][b].squish[boxCollideBox(this,this.collide[a][b])]=true
                             if(boxCollideBox(this,this.collide[a][b])==0&&this.collide[a][b].velocity.y<0){

@@ -6,7 +6,9 @@ class player extends partisan{
         this.movement={speed:0.4,jump:12}
         this.base.movement={jump:this.movement.jump}
         this.reload=0
+        this.jumps=0
         this.hype=false
+        this.jumped=false
     }
     display(){
         if(this.fade>0&&this.size>0){
@@ -104,6 +106,13 @@ class player extends partisan{
                 this.layer.strokeWeight(3-max(0,this.anim.direction-0.75)*15)
                 this.layer.point(4+this.anim.direction*12,-19)
             }
+            if(this.jumps>0){
+                this.layer.fill(255,255,200,this.fade)
+                this.layer.noStroke()
+                for(a=0,la=this.jumps;a<la;a++){
+                    this.layer.ellipse(6-la*6+a*12,-90,8,8)
+                }
+            }
             this.layer.translate(0,sin(this.time*10)*-2)
             this.layer.scale(1/this.size)
             this.layer.translate(-this.position.x-this.offset.position.x,-this.position.y-this.offset.position.y)
@@ -136,8 +145,13 @@ class player extends partisan{
         if(!inputs.keys[0][0]&&!inputs.keys[1][0]&&!inputs.keys[0][1]&&!inputs.keys[1][1]){
             this.anim.direction*=0.95
         }
-        if((inputs.keys[0][2]||inputs.keys[1][2])&&this.timers[0]>0){
-            this.timers[0]=0
+        if((inputs.keys[0][2]||inputs.keys[1][2])&&(this.timers[0]>0||this.jumps>0&&!this.jumped)){
+            if(this.timers[0]>0){
+                this.timers[0]=0
+            }else{
+                this.jumps--
+                this.jumped=true
+            }
             this.velocity.y=-this.movement.jump
             if(this.hype>0){
                 this.velocity.y-=this.movement.jump/2

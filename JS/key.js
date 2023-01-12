@@ -8,6 +8,9 @@ function keyPressed(){
 		break
 		case 'w':
 			inputs.keys[0][2]=true
+			for(let a=0,la=entities.players.length;a<la;a++){
+				entities.players[a].jumped=false
+			}
 		break
 		case 's':
 			inputs.keys[0][3]=true
@@ -20,6 +23,9 @@ function keyPressed(){
 		break
 		case 'ArrowUp':
 			inputs.keys[1][2]=true
+			for(let a=0,la=entities.players.length;a<la;a++){
+				entities.players[a].jumped=false
+			}
 		break
 		case 'ArrowDown':
 			inputs.keys[1][3]=true
